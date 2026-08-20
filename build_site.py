@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE = ROOT / "template.html"
 CASES = ROOT / "data" / "cases.json"
+TOSUP = ROOT / "data" / "tosup_patterns.json"
 OUTPUT = ROOT / "index.html"
 
 IND_LABEL = {
@@ -144,12 +145,18 @@ def main() -> None:
     template = TEMPLATE.read_text(encoding="utf-8")
     cases = json.loads(CASES.read_text(encoding="utf-8"))
     cases = [case for case in cases if case.get("status") != "retired"]
+    tosup_payload = json.loads(TOSUP.read_text(encoding="utf-8"))
+    tosup_patterns = tosup_payload.get("seed_patterns", []) + tosup_payload.get("generated_patterns", [])
     cases_html = "\n\n".join(render_card(case) for case in cases)
     start_marker = "  <!-- CASES_START -->"
     end_marker = "  <!-- CASES_END -->"
     start = template.index(start_marker) + len(start_marker)
     end = template.index(end_marker, start)
     output = template[:start] + "\n" + cases_html + "\n  " + template[end:]
+    marker = "__TOSUP_PATTERNS__"
+    if marker not in output:
+        raise RuntimeError("TOSUP pattern placeholder is missing from template.html")
+    output = output.replace(marker, json.dumps(tosup_patterns, ensure_ascii=False, separators=(",", ":")), 1)
 
     industries = {item for case in cases for item in case.get("industries", []) if item}
     products = {item for case in cases for item in case.get("products", []) if item}

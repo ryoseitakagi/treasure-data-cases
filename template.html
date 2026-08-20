@@ -786,6 +786,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var sendBtn = document.getElementById('chat-send');
   var suggestContainer = document.getElementById('chat-suggestions');
 
+  var TOSUP_PATTERNS = __TOSUP_PATTERNS__;
   var IND_LABEL = {it:'IT・テクノロジー',media:'メディア・通信',finance:'金融・保険',retail:'流通・小売',ec:'EC',food:'飲食',consumer:'消費財',fashion:'ファッション',auto:'自動車・モビリティ',transport:'運輸・交通',health:'医療・ヘルスケア',entertain:'エンタメ・スポーツ',energy:'エネルギー',realestate:'不動産'};
   var PROD_LABEL = {cdp:'CDP',engage:'Engage Studio',journey:'Journey',ai_agent:'AI Agent Foundry',cleanroom:'Data Clean Room',audience:'Audience Studio'};
 
@@ -894,15 +895,57 @@ document.addEventListener("DOMContentLoaded", function() {
     return { score: score, reasons: uniqueValues(reasons) };
   }
 
+  function scoreTosupPattern(pattern, q) {
+    var qn = normalize(q);
+    var utterance = normalize(pattern.utterance || '');
+    var score = 0;
+    if (qn.length >= 4 && (utterance.includes(qn) || qn.includes(utterance))) score += 30;
+    (pattern.keywords || []).forEach(function(keyword) {
+      var kn = normalize(keyword);
+      if (kn.length >= 2 && qn.includes(kn)) score += Math.min(8, Math.max(2, Math.floor(kn.length / 2)));
+    });
+    q.toLowerCase().split(/[\s、。,．・／/「」『』（）()!?！？]+/).filter(function(t) { return t.length >= 2; }).forEach(function(token) {
+      if (utterance.includes(normalize(token))) score += 2;
+    });
+    return score;
+  }
+  function matchTosup(q) {
+    var seen = {};
+    return (TOSUP_PATTERNS || []).map(function(pattern) {
+      return { p: pattern, s: scoreTosupPattern(pattern, q) };
+    }).filter(function(item) { return item.s >= 3; }).sort(function(a, b) { return b.s - a.s; }).filter(function(item) {
+      if (seen[item.p.usecase]) return false;
+      seen[item.p.usecase] = true;
+      return true;
+    }).slice(0, 2);
+  }
+  function tosUpHeader(matches, q) {
+    if (!matches.length) return '';
+    var rows = matches.map(function(item) {
+      var p = item.p;
+      var qn = normalize(q);
+      var signals = (p.keywords || []).filter(function(k) { return qn.includes(normalize(k)); }).slice(0, 3);
+      var reason = signals.length ? signals.join('・') : '顧客の課題・検討意向';
+      return '<div style="margin:6px 0 10px"><strong>トスアップ候補：' + escapeHtml(p.label) + '</strong><br><span style="color:#4b5563">検知したシグナル：' + escapeHtml(reason) + '</span></div>';
+    });
+    return '<div class="chat-routing"><strong>顧客の発言からの汲み取り</strong><br>' + rows.join('') + '</div><br>';
+  }
+
   function buildAnswer(q) {
     var ql = normalize(q);
     if (/全部|全件|すべて|一覧|リスト/.test(ql)) return '現在 <strong>' + caseData.length + '件</strong> の事例が登録されています。';
+    var leads = matchTosup(q);
+    var retrievalQuery = q + ' ' + leads.map(function(item) { return (item.p.keywords || []).join(' '); }).join(' ');
     var ranked = caseData.map(function(c) {
-      var scored = scoreCard(c, q);
+      var scored = scoreCard(c, retrievalQuery);
       return { c: c, s: scored.score, reasons: scored.reasons };
     }).filter(function(x) { return x.s > 0; }).sort(function(a, b) {
       return b.s - a.s || (a.c.featured === b.c.featured ? 0 : (a.c.featured ? -1 : 1));
     }).slice(0, 5);
+    var header = tosUpHeader(leads, q);
+    if (!ranked.length && leads.length) {
+      return header + 'この相談シグナルに直接対応する導入事例は、現在の登録データからは確認できませんでした。<br>製品担当へのトスアップ候補として、顧客のデータ環境・対象業務・目標指標を確認してください。';
+    }
     if (!ranked.length) return '「' + escapeHtml(q) + '」に近い事例が見つかりませんでした。<br>「データがバラバラ」「工数を減らしたい」「ファン化」「広告改善」など、課題や目的で試してみてください。';
 
     var lines = ranked.map(function(item) {
@@ -915,7 +958,7 @@ document.addEventListener("DOMContentLoaded", function() {
       var link = c.url ? '<br><a href="' + escapeHtml(c.url) + '" target="_blank" rel="noopener">詳細を見る ↗</a>' : '<br><span style="color:#9ca3af">公式詳細ページは未確認</span>';
       return '<strong>' + name + '</strong>' + sub + '<br>関連理由：' + escapeHtml(why) + '<br>📋 ' + escapeHtml(summary.slice(0, 180)) + (result ? '<br>📊 ' + escapeHtml(result) : '') + '<br>🔧 ' + escapeHtml(labelForProduct(c.prods) || '製品情報を確認中') + link;
     });
-    return ranked.length + '件の関連事例が見つかりました：<br><br>' + lines.join('<br><br>');
+    return header + ranked.length + '件の関連事例が見つかりました：<br><br>' + lines.join('<br><br>');
   }
 
   function addMsg(html, role) {
