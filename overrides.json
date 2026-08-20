@@ -1,0 +1,1607 @@
+[
+  {
+    "slug": "tdcw2025-mitsubishi-electric-ibm",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2025-mitsubishi-electric-ibm/",
+    "company": "三菱電機株式会社",
+    "sub": "日本アイ・ビー・エム株式会社",
+    "industries": [
+      "it"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "三菱電機 IBM BtoB CDP データ可視化 コネクター 電気機器",
+    "description": "CDP × AI活用によるBtoB営業変革。顧客情報の一元化と可視化で新たな価値創出を実現。",
+    "background": "営業情報が事業部ごとに分断されており、システム間でデータがつながっていない状態だった。複数部門が連携して営業活動を行う際には属人的な情報共有に頼らざるを得ず、同一顧客への重複訪問も発生していた。",
+    "summary": "事業部をまたぐ顧客データがサイロ化し、営業の重複訪問が発生していた。CDPで顧客情報を一元化し、BtoB営業変革の基盤を構築した。",
+    "catchcopy": "部門の壁を壊し、バラバラだったBtoB顧客データの一元化に成功",
+    "badges": [
+      "営業データのサイロ化が課題",
+      "BtoB顧客情報の一元化を実現"
+    ],
+    "metrics": [],
+    "results": [
+      "BtoB顧客情報を一元化",
+      "営業変革の基盤を構築"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "ps-ntt-integration",
+    "url": "https://www.treasure.ai/ja/customers/ps-ntt-integration/",
+    "company": "NTTインテグレーション株式会社",
+    "sub": "",
+    "industries": [
+      "it"
+    ],
+    "products": [
+      "engage",
+      "ai_agent"
+    ],
+    "search": "NTTインテグレーション NI+C Engage Studio AIエージェントファウンドリー 技術共創",
+    "description": "AI時代のデータ活用を成功に導く技術共創。Engage StudioとAIエージェントを活用し自動化・DX推進を実現。",
+    "background": "AI Agent FoundryやEngage Studioなど新機能の高度化により、マニュアル参照だけでは限界を感じる状況となった。「どう組み上げるか」というアーキテクチャの質が問われるようになり、専門的な技術支援の必要性が高まっていた。",
+    "summary": "新機能の高度化でマニュアル参照だけでは対応が困難になっていた。Treasure AIで技術検証期間を大幅短縮し、設計ミス・手戻りを事前防止した。",
+    "catchcopy": "AIを共に作る技術共創パートナーシップの構築を実現",
+    "badges": [
+      "マニュアル参照では対応困難に",
+      "技術検証を大幅短縮・手戻り防止"
+    ],
+    "metrics": [],
+    "results": [
+      "技術検証期間を大幅短縮",
+      "設計ミス・手戻りを事前防止"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2025-nttdata-qualtrics",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2025-nttdata-qualtrics/",
+    "company": "株式会社NTTデータ",
+    "sub": "クアルトリクス合同会社",
+    "industries": [
+      "it"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "NTTデータ クアルトリクス 顧客中心主義 CX セグメンテーション データ可視化",
+    "description": "顧客の\"なぜ\"を理解し顧客中心主義経営を達成。O-dataとX-dataの統合による顧客理解の深化。",
+    "background": "多くの企業はCDPで顧客データを保有しながらも業務データ偏重のアプローチに陥っており、顧客が「なぜその行動を取ったのか」という感情や理由まで踏み込めていなかった。顧客中心主義経営を実践できている企業は全体の約3％に過ぎないという厳しい現実があった。",
+    "summary": "顧客の感情や行動の「なぜ」まで踏み込んだ分析ができていなかった。O×Xデータ統合で顧客維持率51%向上・収益成長率41%改善を達成した。",
+    "catchcopy": "顧客の「なぜ離れたか」を数字で可視化することに成功",
+    "badges": [
+      "顧客の「なぜ」が分析できず",
+      "顧客維持率51%向上を達成"
+    ],
+    "metrics": [
+      "収益成長率 41%向上（調査）",
+      "顧客維持率 51%向上（調査）"
+    ],
+    "results": [
+      "顧客の「なぜ」を定量化",
+      "O×Xデータ統合で顧客中心経営"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "fbj",
+    "url": "https://www.treasure.ai/ja/customers/fbj/",
+    "company": "富士フイルムビジネスイノベーションジャパン株式会社",
+    "sub": "",
+    "industries": [
+      "it"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "富士フイルムビジネスイノベーション 営業 モバイル データ統合 B2B コネクター",
+    "description": "データ統合 × モバイル活用で営業を「情報武装化」。B2Bマーケティングの効率と精度を向上。",
+    "background": "顧客情報がEC・メール配信ツール・SFAなどに分散しており、部門横断の活用ができていなかった。マーケティングツールは導入済みながらほぼ一斉配信にとどまり、個別のリード育成への対応が困難な状況だった。",
+    "summary": "顧客情報がEC・メール・SFAに分散し、部門横断での活用ができていなかった。データ活用基盤の構築で訪問準備を30分から5分に短縮し、80人月を削減した。",
+    "catchcopy": "訪問準備83%削減、間接工数80人月カットを同時に実現",
+    "badges": [
+      "顧客情報がEC・SFAに分散",
+      "訪問準備30分→5分・80人月削減"
+    ],
+    "metrics": [
+      "顧客カバレッジ +3.2%",
+      "訪問準備 30分→5分",
+      "間接工数 80人月削減"
+    ],
+    "results": [
+      "営業のデータ活用基盤を構築",
+      "モバイル活用で情報武装化実現"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2024legoliss",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2024legoliss/",
+    "company": "キヤノンマーケティングジャパン株式会社",
+    "sub": "株式会社Legoliss",
+    "industries": [
+      "it"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "キヤノンマーケティングジャパン Legoliss BtoB データ活用戦略 電気機器",
+    "description": "BtoBビジネスを促進させるデータ活用戦略と成果。マーケティングプロセスの可視化と最適化を実現。",
+    "background": "顧客情報がサービスごとに点在し管理も属人化していた。データ収集のたびに担当営業が各管理部門へ個別に問い合わせる必要があり、営業・管理双方に大きな負荷が生じていた。",
+    "summary": "データ収集のたびに担当営業が各管理部門へ個別に問い合わせる必要があった。BtoBデータ活用の可視化により年間2,600時間削減・売上前年比105%を達成した。",
+    "catchcopy": "年間2600時間削減しながら売上前年比105%増を実現",
+    "badges": [
+      "データ収集に属人的な問い合わせ",
+      "年間2,600時間削減・売上105%"
+    ],
+    "metrics": [
+      "年間 2,600時間の作業削減",
+      "コンタクト数 前年比121%増",
+      "売上 前年比105%増"
+    ],
+    "results": [
+      "BtoBデータ活用戦略を可視化",
+      "営業・マーケ連携の効率化"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2024fujitsu",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2024fujitsu/",
+    "company": "富士通株式会社",
+    "sub": "",
+    "industries": [
+      "it"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "富士通 顧客体験向上 電気機器",
+    "description": "CDPを活用した顧客体験向上への取り組み。グローバルITベンダーとして自社DXを推進。",
+    "background": "",
+    "summary": "グローバルITベンダーとしてCDPを活用した顧客体験向上に取り組んだ。データ活用の内製化と顧客起点のマーケティング変革を推進した。",
+    "catchcopy": "",
+    "badges": [
+      "CDPを活用した顧客体験向上",
+      "グローバルITベンダーとして自社DX推進"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "softbank01",
+    "url": "https://www.treasure.ai/ja/customers/softbank01/",
+    "company": "ソフトバンク株式会社",
+    "sub": "AIエージェント × デジタルセールス",
+    "industries": [
+      "media"
+    ],
+    "products": [
+      "journey",
+      "ai_agent"
+    ],
+    "search": "ソフトバンク AIエージェント デジタルセールス ジャーニー データ統合",
+    "description": "AIエージェントが変えるデジタルセールス。ジャーニーオーケストレーションとAI連携で営業プロセスを自動化。",
+    "background": "法人営業が人海戦術に依存し、マーケティング部門ではExcel・Accessによるデータ集計に工数が取られ十分な分析ができていなかった。デジタル施策による集客と営業連携という理想はあっても実現への道筋が見えていなかった。",
+    "summary": "マーケティング部門でExcel・Accessによるデータ集計に多大な工数が取られていた。CDPデータで独自AIの予測モデルを強化し、メール開封率427%向上を達成した。",
+    "catchcopy": "メール開封率427%向上、資料DL153%増を同時に実現",
+    "badges": [
+      "Excel集計に多大な工数",
+      "メール開封率427%向上を達成"
+    ],
+    "metrics": [
+      "資料DL数 153%増加",
+      "メール開封率 427%向上"
+    ],
+    "results": [
+      "独自AIの精度を向上",
+      "CDPデータで予測モデルを強化"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "softbank-it",
+    "url": "https://www.treasure.ai/ja/customers/softbank-it/",
+    "company": "ソフトバンク株式会社",
+    "sub": "IT部門のサービス化",
+    "industries": [
+      "media"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "ソフトバンク IT部門 サービス システム開発 データコンソール コネクター 内製化",
+    "description": "IT部門の「サービスとしてのシステム開発」を推進。データコンソールとコネクター活用で内製化を加速。",
+    "background": "各事業部のエンジニアが自らSQLでデータをダウンロードするという非効率な運用が続いていた。ローカル環境へのダウンロードはセキュリティリスクを伴い、通信キャリアとして顧客データ保護が事業の重要課題となっていた。",
+    "summary": "各事業部のエンジニアが自らSQLでデータをダウンロードする非効率な運用が続いていた。Treasure AIでIT部門の内製開発力を強化し、サービス型システム開発を実現した。",
+    "catchcopy": "数百人の営業が自分でCDPを使いこなす組織変革に成功",
+    "badges": [
+      "SQLでのデータDLが非効率",
+      "数百人が自分でCDPを活用"
+    ],
+    "metrics": [],
+    "results": [
+      "IT部門の内製開発力を強化",
+      "サービス型システム開発を実現"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "softbank-mobile-promote",
+    "url": "https://www.treasure.ai/ja/customers/softbank-mobile-promote/",
+    "company": "ソフトバンク株式会社",
+    "sub": "独自AI高度化 CDP基盤",
+    "industries": [
+      "media"
+    ],
+    "products": [
+      "cdp",
+      "journey",
+      "ai_agent"
+    ],
+    "search": "ソフトバンク 独自AI CDP データ基盤 AIエージェントファウンドリー ジャーニー パーソナライズ",
+    "description": "独自AIを高度化するCDPデータ基盤構築。ジャーニーオーケストレーション＋AIエージェントでパーソナライズ施策を全社展開。",
+    "background": "社内に数百のシステム・数千のDBを抱え、散在するデータの収集に多大な時間を要していた。分析に必要なデータ抽出だけで数日かかる状況で、PDCAサイクルの高速化が大きな課題だった。",
+    "summary": "データ抽出だけで数日を要し、PDCAサイクルの高速化が大きな課題だった。AIによる営業プロセス自動化で施策数を最大5倍に拡大した。",
+    "catchcopy": "業務時間94%削減で、受注貢献度4.3%向上を同時に実現",
+    "badges": [
+      "データ抽出に数日かかっていた",
+      "施策数が最大5倍に拡大"
+    ],
+    "metrics": [
+      "データ抽出が数日→大幅短縮",
+      "施策数が最大 5倍に増大"
+    ],
+    "results": [
+      "AIで営業プロセスを自動化",
+      "施策数が最大5倍に増大"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "plazma31-tsi-shueisha",
+    "url": "https://www.treasure.ai/ja/customers/plazma31-tsi-shueisha/",
+    "company": "株式会社集英社",
+    "sub": "",
+    "industries": [
+      "media"
+    ],
+    "products": [
+      "cdp",
+      "ai_agent"
+    ],
+    "search": "集英社 データ統合 エンリッチ 顧客データベース AIエージェント 自動化",
+    "description": "データ統合による顧客データベースのエンリッチ化。AIエージェントと自動化で複数メディアの読者データを一元管理。",
+    "background": "各事業部や編集部ごとに個別最適なデータ活用は行われていたものの、全社横断でサービスをまたぐ形ではデータを活用しきれていなかった。GDPR・ITP等の環境変化への対応も急務となり、データのサイロ化解消が課題として浮上した。",
+    "summary": "全社横断でサービスをまたぐ形ではデータを活用しきれていなかった。顧客DBのエンリッチ化により新規流入率96.1%・F2転換率48.9%を達成した。",
+    "catchcopy": "新規流入96.1%×F2転換48.9%、読者をゼロから育てることに成功",
+    "badges": [
+      "全社横断のデータ活用ができず",
+      "新規流入96.1%・F2転換48.9%"
+    ],
+    "metrics": [
+      "新規流入率 96.1%",
+      "F2転換率 48.9%"
+    ],
+    "results": [
+      "顧客DBのエンリッチ化",
+      "データ統合で読者理解が深化"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "mainichi-newspapers-tsi",
+    "url": "https://www.treasure.ai/ja/customers/mainichi-newspapers-tsi/",
+    "company": "株式会社毎日新聞社",
+    "sub": "株式会社TSI",
+    "industries": [
+      "media",
+      "retail"
+    ],
+    "products": [
+      "cdp",
+      "audience"
+    ],
+    "search": "毎日新聞 TSI CDP 広告 新規顧客 アッパーファネル セグメンテーション オーディエンス",
+    "description": "CDP連携でアッパーファネル広告戦略を推進。オーディエンス拡張により新規顧客獲得を最大化。",
+    "background": "運用型広告の配信がプラットフォームのアルゴリズムにより既存顧客に偏る傾向があった。潜在顧客へのアッパーファネル施策が不足し、Cookie規制の強化により新規ユーザーの正確な計測が困難になるという構造的問題もあった。",
+    "summary": "運用型広告が既存顧客に偏り、新規顧客獲得が困難な状況が続いていた。CDP連携によるアッパーファネル広告強化で新規顧客率99.8%を達成した。",
+    "catchcopy": "既存顧客に頼らず、新規顧客率99.8%の顧客基盤構築に成功",
+    "badges": [
+      "既存顧客偏重で新規獲得が困難",
+      "新規顧客率99.8%を達成"
+    ],
+    "metrics": [
+      "新規顧客率 99.8%",
+      "新規顧客率 99.8%"
+    ],
+    "results": [
+      "CDP連携で新規顧客獲得を最大化",
+      "アッパーファネル広告を強化"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "wowow",
+    "url": "https://www.treasure.ai/ja/customers/wowow/",
+    "company": "株式会社WOWOWコミュニケーションズ",
+    "sub": "",
+    "industries": [
+      "media"
+    ],
+    "products": [
+      "ai_agent"
+    ],
+    "search": "WOWOW WOWOWコミュニケーションズ VOC AIエージェント 音声 コールセンター",
+    "description": "VOC分析AIエージェントの実力。顧客の声を自動分析し、サービス改善サイクルを大幅に加速。",
+    "background": "分析依頼からSQL作成までの手戻りが多発しエンジニアのリソースが圧迫されていた。分析依頼から施策提案まで2週間程度かかるケースもあり、アンケートへの目視タグ付けなど非効率な作業負担も存在していた。",
+    "summary": "分析依頼から施策提案まで2週間程度かかるスピード不足が課題だった。VOC分析の自動化により間接工数80人月削減・訪問準備83%削減を実現した。",
+    "catchcopy": "工数80人月削減しながら顧客カバレッジ3.2%拡大を同時に実現",
+    "badges": [
+      "分析から提案まで2週間かかる",
+      "工数80人月削減・カバレッジ+3.2%"
+    ],
+    "metrics": [
+      "間接工数削減 80人月（2ヶ月）",
+      "訪問準備 83%削減"
+    ],
+    "results": [
+      "顧客カバレッジ +3.2%改善",
+      "VOC分析を自動化しサービス改善加速"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2025-chibabank-ntt-integration",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2025-chibabank-ntt-integration/",
+    "company": "株式会社千葉銀行",
+    "sub": "NTTインテグレーション株式会社",
+    "industries": [
+      "finance"
+    ],
+    "products": [
+      "cdp",
+      "journey"
+    ],
+    "search": "千葉銀行 銀行 One to One マーケティング CDP ジャーニー パーソナライゼーション NTTインテグレーション",
+    "description": "CDPとAIで最高の顧客体験を目指すOne to Oneマーケティング。ジャーニーオーケストレーションで顧客ライフサイクル全体をカバー。",
+    "background": "",
+    "summary": "顧客情報が複数システムに分散し、一貫した顧客体験の提供が困難だった。ノーコードで予測モデルを作成し、One to Oneマーケ基盤を確立した。",
+    "catchcopy": "",
+    "badges": [
+      "顧客情報が複数システムに分散",
+      "ノーコードで予測モデルを作成"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "sompo-himawari-life-insurance",
+    "url": "https://www.treasure.ai/ja/customers/sompo-himawari-life-insurance/",
+    "company": "ＳＯＭＰＯひまわり生命保険株式会社",
+    "sub": "",
+    "industries": [
+      "finance"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "SOMPOひまわり生命 保険 健康行動 CDP セグメンテーション",
+    "description": "健康行動の促進にCDPを活用。被保険者の健康増進プログラムへのエンゲージメント向上を実現。",
+    "background": "Treasure Data CDPが導入済みでデータは蓄積されていたものの、セキュリティ上の制約からデータが複数の部門やツールに分散しておりCDPへの統合が進んでいなかった。非エンジニアのマーケターがCDPを直接操作することをためらい、ターゲットリスト作成に長いプロセスと工数がかかっていた。",
+    "summary": "非エンジニアのマーケターがCDP操作をためらい、リスト作成に時間がかかっていた。CDP活用で入院率約50%低下・リスト作成工数1/10・リードタイム1/30を達成した。",
+    "catchcopy": "リスト工数1/10、リードタイム1/30、入院率まで下がった",
+    "badges": [
+      "CDP操作に工数がかかりすぎ",
+      "入院率50%低下・工数1/10達成"
+    ],
+    "metrics": [
+      "リスト作成工数 1/10に削減",
+      "リードタイム 1/30に短縮",
+      "入院率 約50%低下"
+    ],
+    "results": [
+      "健康行動促進のCDP活用を実現",
+      "被保険者エンゲージメント向上"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "hirogin",
+    "url": "https://www.treasure.ai/ja/customers/hirogin/",
+    "company": "株式会社ひろぎんホールディングス",
+    "sub": "",
+    "industries": [
+      "finance"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "ひろぎんホールディングス 広島銀行 地銀 デジタルチャネル コミュニケーション",
+    "description": "会えない顧客の解像度を上げるコミュニケーション。デジタルチャネルを通じた顧客接点の強化。",
+    "background": "デジタル化の進展により銀行窓口への来店者数が減少し、対面での顧客接点が失われつつあった。アプリ利用履歴やサイト閲覧ログなどのデジタル行動データは基幹システムと分散管理されており、顧客軸で取引とデジタル行動をまたいで追うことができない状態だった。",
+    "summary": "デジタル化の進展で来店顧客が減少し、顧客の解像度が低い状態だった。Treasure AIで非対面顧客の解像度を向上し、デジタル接点の強化を実現した。",
+    "catchcopy": "来店しない顧客が、実は一番大切なお客様だった",
+    "badges": [
+      "来店減少で顧客解像度が低下",
+      "非対面顧客へのデジタル接点強化"
+    ],
+    "metrics": [],
+    "results": [
+      "非対面顧客の解像度を向上",
+      "デジタル接点の強化を実現"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "smbc-cdp-case-studies",
+    "url": "https://www.treasure.ai/ja/customers/smbc-cdp-case-studies/",
+    "company": "三井住友銀行",
+    "sub": "",
+    "industries": [
+      "finance"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "三井住友銀行 SMBC ライフステージ 情報提供 セグメンテーション",
+    "description": "ニーズやライフステージの変化に応じた情報提供。顧客データ活用で適切なタイミングでの提案を実現。",
+    "background": "",
+    "summary": "顧客のライフステージ変化に合わせた適切な情報提供が困難だった。CDPとセグメンテーションで、最適なタイミングでの提案を実現した。",
+    "catchcopy": "",
+    "badges": [
+      "ライフステージ変化の把握が困難",
+      "最適タイミングでの提案を実現"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tsi-llm",
+    "url": "https://www.treasure.ai/ja/customers/tsi-llm/",
+    "company": "株式会社TSI",
+    "sub": "生成AI × CDP広告活用",
+    "industries": [
+      "retail",
+      "ec",
+      "fashion"
+    ],
+    "products": [
+      "cdp",
+      "engage",
+      "audience",
+      "cleanroom"
+    ],
+    "search": "TSI ファッション EC Engage Studio 広告最適化 解約予兆 AI CDP",
+    "description": "AI × CDPによる顧客体験改革。Engage Studioで複数ブランドをまたぐパーソナライズと解約予兆検知を実現。",
+    "background": "外部プラットフォームとの連携に開発工数が多くかかり、運用効率が低下していた。顧客データが部門・チャネルごとに分断され、一元的な顧客把握が困難な状況にあった。セグメント抽出やリスト配信作業がアドホック的に行われており、マーケティング施策の自動化・高度化が急務となっていた。",
+    "summary": "リターゲティング広告への依存が高く、新規顧客向けの費用対効果改善が課題だった。データクリーンルーム活用でROASを1,000%から7,900%へ7.9倍改善した。",
+    "catchcopy": "ROAS1000%が7900%へ、売上も7900万円に跳ね上がった",
+    "badges": [
+      "新規向け広告のROASが低迷",
+      "ROAS 1,000%→7,900%に改善"
+    ],
+    "metrics": [
+      "ROAS 1,000% → 7,900%",
+      "月間売上 1,000万 → 7,900万円",
+      "F2転換率 48.9%",
+      "ROAS 1000% → 7900% / 月間売上 1000万 → 7900万円"
+    ],
+    "results": [
+      "ROAS 7.9倍改善",
+      "データクリーンルームで安全なデータ活用"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "takara-tomy",
+    "url": "https://www.treasure.ai/ja/customers/takara-tomy/",
+    "company": "株式会社タカラトミー",
+    "sub": "",
+    "industries": [
+      "ec"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "タカラトミー EC 売上成長 データ活用 セグメンテーション パーソナライズ",
+    "description": "タカラトミーモールの多彩なデータ活用。セグメンテーション×パーソナライゼーションでECの売上を大幅拡大。",
+    "background": "少子化により従来の子ども向け市場だけでは成長が見込みにくく、自社ECサイトでの顧客コミュニケーション強化が必要だったが、会員情報・行動履歴・購買データが統合されていなかった。新商品発売時には外部制作会社への情報連携や手作業でのメッセージ作成が続いており、業務効率の面でも改善が求められていた。",
+    "summary": "購買後のファン化・継続購買につながる施策が不十分で、LTV向上が急務だった。パーソナライズ施策の内製化で売上前年比130%・メルマガ遷移率4.5倍を達成した。",
+    "catchcopy": "メルマガひとつで遷移率4.5倍、売上が前年比130%になった",
+    "badges": [
+      "購買後のLTV向上策が不十分",
+      "売上前年比130%・遷移率4.5倍"
+    ],
+    "metrics": [
+      "売上 前年比 130%",
+      "メルマガ遷移率 4.5倍",
+      "解約者復帰 遷移率 3倍",
+      "売上成長 130%"
+    ],
+    "results": [
+      "ECサイトの売上を大幅拡大",
+      "パーソナライズ施策を内製化"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2025-istyle-hiveiq",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2025-istyle-hiveiq/",
+    "company": "アイスタイルデータコンサルティング株式会社",
+    "sub": "株式会社ハイブアイキュー",
+    "industries": [
+      "ec"
+    ],
+    "products": [
+      "cdp",
+      "ai_agent"
+    ],
+    "search": "アイスタイル @cosme データ 生成AI AIエージェントファウンドリー 事業変革",
+    "description": "データと生成AIで描く事業変革のリアルと未来。データ分析・施策提案AIエージェントでマーケティングを自動化。",
+    "background": "@cosmeや店舗・ECから膨大なデータを蓄積していたものの、命名ルールが煩雑で欲しいデータが見つからない状況にあった。データ抽出にはSQLの知識が必要なためエンジニアへの依頼が不可欠で業務に時間がかかるという問題を抱えており、非エンジニアのコンサルタントが自律的にデータを活用できる体制の構築が急務となっていた。",
+    "summary": "データ抽出にSQL知識が必要なため、業務にエンジニアへの依頼が不可欠だった。生成AIで2,300万件を分析し、非エンジニアによるデータ活用・施策提案を自動化した。",
+    "catchcopy": "AIが2300万件を読んで、人が気づけなかった答えを出した",
+    "badges": [
+      "分析にエンジニア依頼が必須",
+      "AIで2,300万件分析を自動化"
+    ],
+    "metrics": [
+      "AIエージェントで2,300万件分析"
+    ],
+    "results": [
+      "生成AIで施策提案を自動化",
+      "非エンジニアがデータ分析可能に"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "sanrio",
+    "url": "https://www.treasure.ai/ja/customers/sanrio/",
+    "company": "株式会社サンリオ",
+    "sub": "マーケティング進化 ／ データドリブン経営",
+    "industries": [
+      "retail"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "サンリオ ファンダム マーケティング キャラクター データドリブン 経営",
+    "description": "ファンダムに寄り添うマーケティング進化とデータドリブン経営への挑戦。データコンソールで全社データ活用を推進。",
+    "background": "データに基づく意思決定を経営強化の手段として注目していたが、社内だけでは専門人材の確保・育成に限界があった。購買データに留まらず生活者視点のインサイトを企画やマーケティングへ活かすという高度なニーズにも応えられる体制が整っていなかった。",
+    "summary": "複数チャネル・ブランドをまたぐ顧客データの統合と経営活用の整備が求められていた。データドリブン経営を全社に浸透させ、O2O横断の顧客体験設計を可能にした。",
+    "catchcopy": "キャラクター愛を、全社のデータ経営に変えた会社",
+    "badges": [
+      "チャネル横断のデータ統合が必要",
+      "全社データドリブン経営を実現"
+    ],
+    "metrics": [],
+    "results": [
+      "データドリブン経営が全社に浸透",
+      "O2O横断の顧客体験設計が可能に"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2025-sanrio",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2025-sanrio/",
+    "company": "株式会社サンリオ",
+    "sub": "TDCW2025 講演",
+    "industries": [
+      "retail"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "サンリオ サンリオ時間 マーケティング 哲学 データ活用 2025",
+    "description": "「サンリオ時間」という独自哲学を軸にしたデータ活用マーケティング。TDCW2025での講演事例。",
+    "background": "キャラクターグッズの販売による売上・利益以外に、顧客がキャラクターと接している時間という無形の資産を可視化できていなかった。個々のファンの深いインサイトを理解するための分析手法や、データとAIを活用した体系的なマーケティングフレームワークの構築が求められていた。",
+    "summary": "ブランド独自の体験哲学をデジタルマーケティングで体現する方法が課題だった。データ活用でサンリオ時間を前年比1.5倍に伸ばし、ファンとの絆を深める施策を実現した。",
+    "catchcopy": "サンリオ時間が1.5倍——データが熱量を可視化した",
+    "badges": [
+      "ブランド哲学のデジタル体現が課題",
+      "サンリオ時間が前年比1.5倍に"
+    ],
+    "metrics": [
+      "サンリオ時間 前年比1.5倍"
+    ],
+    "results": [
+      "ファンとの絆を深める施策実現",
+      "独自哲学をデータで体現"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "owndays",
+    "url": "https://www.treasure.ai/ja/customers/owndays/",
+    "company": "OWNDAYS株式会社",
+    "sub": "",
+    "industries": [
+      "fashion"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "OWNDAYS オンデーズ グローバル CRM ロイヤリティ 内製化 自動化 セグメンテーション",
+    "description": "グローバルCRM基盤構築の全体像。ロイヤリティ強化・内製化・自動化を実現し、アジア全域に展開。超スピード導入の舞台裏も公開。",
+    "background": "顧客データを保有していたものの、IT部門しかアクセスできず、マーケティング担当者が施策を実行するたびに依頼が必要で平均1週間のリードタイムが生じていた。コミュニケーション施策は画一的なものに限られており、顧客セグメントに応じた柔軟なアプローチが困難な状況だった。",
+    "summary": "施策立案・実行が現地チームごとに属人化し、スピードのばらつきが生じていた。グローバルCRM基盤を3ヶ月で構築し、施策実行を最短1日に短縮した。",
+    "catchcopy": "グローバルCRMを3ヶ月で立ち上げ、翌日には施策が動いた",
+    "badges": [
+      "施策実行が現地任せで属人化",
+      "グローバルCRMを3ヶ月で構築"
+    ],
+    "metrics": [
+      "休眠顧客CVR 1.8倍",
+      "施策実行 最短1日"
+    ],
+    "results": [
+      "グローバルCRM基盤を3ヶ月で構築",
+      "施策実行を最短1日に短縮"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "puma",
+    "url": "https://www.treasure.ai/ja/customers/puma/",
+    "company": "プーマジャパン株式会社",
+    "sub": "",
+    "industries": [
+      "fashion"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "プーマジャパン PUMA LTV 顧客生涯価値 組織変革 スポーツアパレル",
+    "description": "CDP活用とLTV向上による組織変革。スポーツアパレルブランドとしてデータ主導のマーケティング体制を構築。",
+    "background": "顧客データの大半はメールシステムで管理されており、店舗側にはデータ取得の仕組みが整っていなかった。オンライン施策が店舗集客にどう貢献したかを測定できず、チャネルをまたいだ効果検証が困難な状態だった。クッキーレス社会への対応という外部環境の変化も、統合的なデータ基盤の整備を急ぐ動機となっていた。",
+    "summary": "新規顧客獲得でリターゲティング広告への依存度が高く、費用対効果の改善が課題だった。Treasure AI活用で新規獲得をリターゲティング同水準に改善し、LTV向上による組織変革を実現した。",
+    "catchcopy": "新規獲得がリターゲと同じ精度に——ゼロイチ顧客を取りに行く",
+    "badges": [
+      "リターゲ依存で新規獲得が非効率",
+      "新規獲得をリターゲ同水準に改善"
+    ],
+    "metrics": [
+      "新規獲得CPA・ROAS リターゲティング同水準に改善"
+    ],
+    "results": [
+      "新規獲得をリターゲティング同水準に改善",
+      "LTV向上による組織変革"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "circluxe",
+    "url": "https://www.treasure.ai/ja/customers/circluxe/",
+    "company": "株式会社サークラックス",
+    "sub": "",
+    "industries": [
+      "ec"
+    ],
+    "products": [
+      "cdp",
+      "ai_agent"
+    ],
+    "search": "サークラックス 中古ブランド品 買取 販売 AIエージェント 業務効率化 商品分析",
+    "description": "中古ブランド品の買取・販売をつなぐデータ抽出をAIエージェントで効率化。商品分析AIで業務プロセスを自動化。",
+    "background": "買取部門と販売部門の顧客データが基幹システム上で別々に管理されており、両者を統合した顧客理解ができていなかった。中古ブランド品はすべて一点ものであるため個別対応が必要だが、複雑なアドホック分析をすべて人手で行うには限界があり、データに基づいた商品ごとの施策実行が難しい状態だった。",
+    "summary": "一点もの商品の複雑な分析をすべて人手で行うことに限界があった。AIエージェントで月間300時間の工数を削減し、施策提案を最短1日に短縮した。",
+    "catchcopy": "月300時間が消えた。提案は翌日に。",
+    "badges": [
+      "一点もの分析が人手に限界",
+      "月300時間削減・提案を最短1日に"
+    ],
+    "metrics": [
+      "月間工数削減 300時間",
+      "施策提案 最短1日"
+    ],
+    "results": [
+      "AIエージェントで業務を自動化",
+      "施策提案を最短1日に短縮"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2024shopify-dentsudigital",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2024shopify-dentsudigital/",
+    "company": "Shopify Japan株式会社",
+    "sub": "",
+    "industries": [
+      "ec"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "Shopify Japan コマース AI EC データ活用",
+    "description": "コマースとAIの活用。EC事業者向けデータ活用の知見共有と、自社データ基盤の高度化を推進。",
+    "background": "",
+    "summary": "EC事業者向けデータ活用の知見共有と、自社データ基盤の高度化が求められていた。CDP×AIの活用でECプラットフォームとしてのデータ戦略を強化した。",
+    "catchcopy": "",
+    "badges": [
+      "EC事業者のデータ活用強化が必要",
+      "CDP×AIでデータ戦略を強化"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "suntory",
+    "url": "https://www.treasure.ai/ja/customers/suntory/",
+    "company": "サントリーホールディングス株式会社",
+    "sub": "",
+    "industries": [
+      "food"
+    ],
+    "products": [
+      "cdp",
+      "cleanroom"
+    ],
+    "search": "サントリー データクリーンルーム 顧客理解 開封率改善 メール",
+    "description": "データクリーンルームによる顧客理解と基盤構築。パートナーとの安全なデータ共有でメール施策を最適化。",
+    "background": "「BtoBtoC」モデルのため、消費者の購買行動や嗜好を直接把握することが困難だった。LINE公式アカウントで多数のフォロワーを獲得しているものの、ターゲットの範囲が狭く適切なセグメントにメッセージを届けるのが難しい状況で、配信範囲を広げると関心の低いユーザーにも情報が届き、開封率の低下やROI悪化が懸念されていた。",
+    "summary": "BtoBtoCモデルのため消費者データの直接把握が困難で、ROI悪化が懸念されていた。データクリーンルームで安全なデータ共有を実現し、メール開封率+12.6%を達成した。",
+    "catchcopy": "データを壁越しで使ったら開封率が12.6%上がった",
+    "badges": [
+      "BtoBtoCで消費者把握が困難",
+      "クリーンルームで開封率+12.6%"
+    ],
+    "metrics": [
+      "メール開封率 +12.6%",
+      "開封率 12.6% 改善"
+    ],
+    "results": [
+      "データクリーンルームで安全にデータ共有",
+      "メール施策を最適化"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "kfcj",
+    "url": "https://www.treasure.ai/ja/customers/kfcj/",
+    "company": "日本ケンタッキー・フライド・チキン株式会社",
+    "sub": "",
+    "industries": [
+      "food"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "日本KFC ケンタッキー 潜在欲求 マーケティング セグメンテーション 来店",
+    "description": "潜在欲求を引き出すマーケティング戦略。顧客データ分析でニーズを先読みし、来店促進を実現。",
+    "background": "公式アプリやSNS、メールマガジンなどのデータベースが個別に存在し、顧客IDもチャネルごとにバラバラに発行されていたため、購買行動を一連の流れで把握できていなかった。顧客の属性や購買傾向を横断的に分析する統合基盤が存在せず、パーソナライズされたコミュニケーションの実現が困難だった。",
+    "summary": "公式アプリ・SNSのDBが個別に存在し、購買行動を一連の流れで把握できていなかった。データ統合で潜在ニーズの把握を実現し、来店促進施策の精度を向上させた。",
+    "catchcopy": "AIが来店客を呼んだ。PDCAは人の手を離れた。",
+    "badges": [
+      "チャネル別DBが分断されていた",
+      "データ統合で来店促進精度向上"
+    ],
+    "metrics": [],
+    "results": [
+      "潜在ニーズの把握を実現",
+      "来店促進施策の精度向上"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "asahi-beer",
+    "url": "https://www.treasure.ai/ja/customers/asahi-beer/",
+    "company": "アサヒビール株式会社",
+    "sub": "",
+    "industries": [
+      "food"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "アサヒビール LINE CDP メーカー データ活用 D2C",
+    "description": "LINE × CDPでメーカー独自のデータ活用モデルを構築。小売を介さない直接顧客接点を強化。",
+    "background": "BtoBtoCのビジネス構造上、顧客との直接的な接点が限られており、「情報取得において弱者」という状況にあった。宣伝部とデジタルマーケティング部がサイロ化されていたため、メディア広告のセカンドパーティデータと自社のファーストパーティデータを連携できず、一貫したコミュニケーションが困難だった。",
+    "summary": "BtoBtoCの構造上、消費者との直接接点が限られ情報取得において弱者だった。D2Cデータ活用モデルの構築とLINE連携でROI 2.7倍・友だち登録2,000万超を達成した。",
+    "catchcopy": "LINE2000万人でROI2.7倍を出した話",
+    "badges": [
+      "消費者との直接接点が限定的",
+      "ROI2.7倍・LINE2,000万超達成"
+    ],
+    "metrics": [
+      "ROI 2.7倍改善",
+      "LINE友だち登録 2,000万超"
+    ],
+    "results": [
+      "メーカー独自のD2Cデータ活用モデルを構築",
+      "LINE連携で顧客接点を強化"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2025-kao-dentsusoken",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2025-kao-dentsusoken/",
+    "company": "花王株式会社",
+    "sub": "株式会社電通総研",
+    "industries": [
+      "consumer",
+      "health"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "花王 CDP 顧客体験 電通総研 セグメンテーション データ収集 自動化",
+    "description": "CDPで実現する顧客体験創出の実態とこれから。セグメンテーション・データ収集・自動化で消費財メーカーのDXを推進。",
+    "background": "",
+    "summary": "消費財メーカーとしてデータのサイロ化解消と顧客体験創出が急務だった。Treasure AIで顧客体験創出の基盤を構築し、セグメンテーション・自動化を実現した。",
+    "catchcopy": "",
+    "badges": [
+      "消費財メーカーのデータサイロ化",
+      "顧客体験創出の基盤を構築"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "legacy-d546c5822eff",
+    "url": "",
+    "company": "資生堂ジャパン株式会社",
+    "sub": "",
+    "industries": [
+      "consumer"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "資生堂ジャパン 次世代CDP ブランドマーケター 美容 パーソナライゼーション",
+    "description": "次世代CDPによりブランドマーケターの未来を実現。美容ブランドのデータドリブンマーケティングを高度化。",
+    "background": "",
+    "summary": "ブランドマーケターが自律的にデータを活用できる環境が整っていなかった。次世代CDPの導入でブランドマーケターの自律的なデータ活用を実現した。",
+    "catchcopy": "",
+    "badges": [
+      "マーケターの自律的活用が困難",
+      "次世代CDPでブランド活用を高度化"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "q-sai",
+    "url": "https://www.treasure.ai/ja/customers/q-sai/",
+    "company": "キューサイ株式会社",
+    "sub": "",
+    "industries": [
+      "consumer",
+      "ec"
+    ],
+    "products": [
+      "cdp",
+      "journey",
+      "ai_agent"
+    ],
+    "search": "キューサイ EC CRM ジャーニーオーケストレーション 生成AI メール作成 経営判断",
+    "description": "メール作成から経営判断支援までの生成AI活用。ジャーニーオーケストレーションでEC強化とCRM最適化を実現。",
+    "background": "",
+    "summary": "オフライン・オンライン間のデータサイロ化が統合的なマーケティング施策の妨げとなっていた。ジャーニー活用によるLTV向上で、EC・CRMの一体運用を実現した。",
+    "catchcopy": "ECとCRMを1本化したらLTVが伸び始めた",
+    "badges": [
+      "オフライン・オンラインがサイロ化",
+      "ジャーニー活用でLTV向上を実現"
+    ],
+    "metrics": [],
+    "results": [
+      "ジャーニー活用でLTV向上",
+      "EC・CRMの一体運用を実現"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "equipe",
+    "url": "https://www.treasure.ai/ja/customers/equipe/",
+    "company": "株式会社エキップ",
+    "sub": "",
+    "industries": [
+      "consumer"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "エキップ パーソナライゼーション 究極 消費財",
+    "description": "究極のパーソナライゼーション実現。顧客一人ひとりに最適化されたコミュニケーション戦略を推進。",
+    "background": "複数の販売チャネルを持つ中、顧客一人ひとりを深く分析してマーケティングに活かせる環境が整っていなかった。メール・LINE・Web接客ツールといった異なるタッチポイント間での顧客コミュニケーションに一貫性が欠けており、購入後も同一商品のレコメンドが繰り返されるなど目指す顧客体験の実現を阻む問題が重なっていた。",
+    "summary": "F2転換率の向上が最大課題で、一斉配信的なアプローチが主流だった。究極のパーソナライズ実現によりF2転換率+10%・LTV 1.4倍を達成した。",
+    "catchcopy": "2回目が増えた。LTVは1.4倍になった。",
+    "badges": [
+      "F2転換率向上が最大の課題",
+      "F2転換率+10%・LTV1.4倍を達成"
+    ],
+    "metrics": [
+      "F2転換率+10% / LTV 1.4倍"
+    ],
+    "results": [
+      "究極のパーソナライズを実現",
+      "顧客一人ひとりへの最適提案"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "legacy-1c172c254c23",
+    "url": "",
+    "company": "株式会社富士フイルムヘルスケアラボラトリー",
+    "sub": "TOPPAN株式会社",
+    "industries": [
+      "consumer"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "富士フイルムヘルスケアラボラトリー TOPPAN マーケティングプロセス 再構築",
+    "description": "マーケティングプロセスの再構築。データ活用でヘルスケア製品のマーケティング効率を大幅改善。",
+    "background": "",
+    "summary": "ヘルスケア製品のマーケティングプロセスが非効率で改善が急務だった。CDP活用でマーケティングプロセスを再構築し、効率と品質を大幅に改善した。",
+    "catchcopy": "",
+    "badges": [
+      "マーケティングプロセスが非効率",
+      "データ活用でプロセスを再構築"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "plazma13-case-study-yamaha-motor",
+    "url": "https://www.treasure.ai/ja/customers/plazma13-case-study-yamaha-motor/",
+    "company": "ヤマハ発動機株式会社",
+    "sub": "",
+    "industries": [
+      "auto"
+    ],
+    "products": [
+      "cdp",
+      "engage"
+    ],
+    "search": "ヤマハ発動機 グローバル Engage Studio エンゲージスタジオ モビリティ 広告最適化 パーソナライゼーション",
+    "description": "TDグローバル展開とEngage Studio活用。世界規模のデータ統合とEngage Studioを用いた広告最適化・パーソナライゼーションを実現。",
+    "background": "「車体番号や登録番号を主語にしたデータ」しか存在せず、顧客IDを軸としたデータ基盤が整備されていなかった。製品販売が主にディーラー経由であったため顧客と直接コミュニケーションする手段が限られており、オンライン・オフラインをまたいだカスタマージャーニーの全体像を把握することができていなかった。",
+    "summary": "顧客IDを軸としたデータ基盤が未整備で、オンライン・オフラインをまたぐジャーニーを把握できなかった。グローバルCDP基盤の統一でROI 30〜100%改善・有望見込み客CV率2倍を達成した。",
+    "catchcopy": "CV率2倍。ROIは最大100%改善した。",
+    "badges": [
+      "顧客IDのデータ基盤が未整備",
+      "ROI30〜100%改善・CV率2倍"
+    ],
+    "metrics": [
+      "ROI 30〜100%改善",
+      "有望見込み客CV率 2倍"
+    ],
+    "results": [
+      "グローバルCDP基盤を統一",
+      "Engage Studioで自動化を実現"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2025-nissan",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2025-nissan/",
+    "company": "日産自動車株式会社",
+    "sub": "",
+    "industries": [
+      "auto"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "日産自動車 Nissan データ AI 顧客体験 オーナー",
+    "description": "データ × AI時代の新しい顧客体験。オーナーとの長期的な関係構築をデータで推進。",
+    "background": "",
+    "summary": "データ活用が部門ごとにサイロ化し、全社で一貫した顧客体験の設計が難しかった。データ×AIでオーナーとの関係構築を強化し、新たな顧客体験を創出した。",
+    "catchcopy": "",
+    "badges": [
+      "部門ごとにデータがサイロ化",
+      "データ×AIでオーナー体験を再設計"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "legacy-1d11541aa211",
+    "url": "",
+    "company": "鈴鹿サーキット",
+    "sub": "",
+    "industries": [
+      "auto"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "鈴鹿サーキット F1 モータースポーツ エンタメ DX ファン",
+    "description": "\"ファン\"に寄り添ったエンタメDX。モータースポーツファンのデータ活用でイベント体験を向上。",
+    "background": "",
+    "summary": "モータースポーツファンとのデジタル接点が不足し、データ活用が限定的だった。CDPを活用したエンタメDXでファン体験を向上させ、顧客との絆を深めた。",
+    "catchcopy": "",
+    "badges": [
+      "ファンとのデジタル接点が不足",
+      "CDPでファン起点のエンタメDXを実現"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "jreast-interview-1",
+    "url": "https://www.treasure.ai/ja/customers/jreast-interview-1/",
+    "company": "東日本旅客鉄道株式会社",
+    "sub": "インタビュー Vol.1",
+    "industries": [
+      "transport"
+    ],
+    "products": [
+      "cdp",
+      "audience"
+    ],
+    "search": "JR東日本 東日本旅客鉄道 鉄道 データマーケティング 顧客起点 オーディエンス 広告最適化",
+    "description": "鉄道起点から顧客起点への転換。オーディエンススタジオ×データマーケティングで沿線サービスの価値向上を推進。",
+    "background": "各事業（駅ビル・Suica・ビューカードなど）が個別にポイントプログラムを運営しており、顧客データが分断されていた。各サービスが独立してマーケティングを展開していたため、顧客のLTVを横断的に把握・向上させることが困難な状況だった。",
+    "summary": "各事業が個別にポイントプログラムを運営し、顧客データが分断されていた。1,355万人の会員データを統合しバナーCTR 3.5倍を達成、顧客起点の組織転換を実現した。",
+    "catchcopy": "1355万人のデータを束ねたらCTRが3.5倍になった",
+    "badges": [
+      "各事業でデータが分断されていた",
+      "1,355万人統合・CTR3.5倍達成"
+    ],
+    "metrics": [],
+    "results": [
+      "バナーCTR 3.5倍を達成",
+      "1,355万人の会員データを統合"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "jreast-interview-2",
+    "url": "https://www.treasure.ai/ja/customers/jreast-interview-2/",
+    "company": "東日本旅客鉄道株式会社",
+    "sub": "インタビュー Vol.2",
+    "industries": [
+      "transport"
+    ],
+    "products": [
+      "cdp",
+      "audience"
+    ],
+    "search": "JR東日本 東日本旅客鉄道 鉄道 データマーケティング 顧客起点 統計分析",
+    "description": "顧客データを多角的に分析し、パーソナライズ施策の精度を高める取り組み。CDP活用の深化と成果。",
+    "background": "従来のシステム開発はウォーターフォール型が中心で、スピード感のあるデータ活用施策を実行できる体制が整っていなかった。CDPを活用したデータマーケティングが進む中で、施策精度のさらなる向上が課題となっていた。",
+    "summary": "CDPを活用したデータマーケティングが進む中で、施策精度のさらなる向上が課題だった。統計的手法で顧客を多角分析し、セグメント精度の継続的向上を実現した。",
+    "catchcopy": "セグメント精度が変わると、施策の刺さり方も変わる",
+    "badges": [
+      "施策精度のさらなる向上が課題",
+      "統計的多角分析でセグメント向上"
+    ],
+    "metrics": [],
+    "results": [
+      "統計的手法で顧客を多角分析",
+      "セグメント精度を向上"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "jreast-interview-3",
+    "url": "https://www.treasure.ai/ja/customers/jreast-interview-3/",
+    "company": "東日本旅客鉄道株式会社",
+    "sub": "インタビュー Vol.3 / CDPW2025",
+    "industries": [
+      "transport"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "JR東日本 東日本旅客鉄道 鉄道 データマーケティング CDPW2025",
+    "description": "顧客起点のデータマーケティング最新展開。CDPW2025での講演を含む継続的な取り組みの深化。",
+    "background": "",
+    "summary": "CDPW2025でのデータマーケティング最新事例。CDPを活用した継続的な取り組みの深化と社内データ活用の民主化を推進した。",
+    "catchcopy": "",
+    "badges": [
+      "1to1施策への転換が課題",
+      "バナーCTR20%超・CV率5%超達成"
+    ],
+    "metrics": [],
+    "results": [
+      "バナーCTR 20%超を達成",
+      "コンバージョン率 5%超を獲得"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2024nankai-nec",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2024nankai-nec/",
+    "company": "南海電気鉄道株式会社",
+    "sub": "",
+    "industries": [
+      "transport"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "南海電気鉄道 南海電鉄 鉄道 顧客体験価値 沿線",
+    "description": "新たな顧客体験価値づくり。沿線データを活用した観光・生活サービスの向上を推進。",
+    "background": "",
+    "summary": "沿線の顧客データが分散し、乗客を個人として把握することが困難だった。CDPで沿線データを統合し、顧客起点の新たな体験価値づくりを実現した。",
+    "catchcopy": "",
+    "badges": [
+      "沿線データが分散していた",
+      "乗客を顧客として把握し体験向上"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "openstreet",
+    "url": "https://www.treasure.ai/ja/customers/openstreet/",
+    "company": "OpenStreet株式会社",
+    "sub": "",
+    "industries": [
+      "transport"
+    ],
+    "products": [
+      "cdp",
+      "journey"
+    ],
+    "search": "OpenStreet シェアサイクル 500万人 顧客データ 少人数 ジャーニー ロイヤリティ パーソナライゼーション",
+    "description": "500万人の顧客データを少人数で運用し、ジャーニーオーケストレーションで顧客体験を設計。",
+    "background": "500万人規模の会員データを抱えながら、本部機能が非常にコンパクトな少人数体制という構造的制約を持っていた。アプリダウンロードから数日以内に利用するのは40％程度にとどまり、残る多数のユーザーへの効果的なアプローチが必要とされていた。",
+    "summary": "500万人規模の会員データを抱えながら、少人数体制でのデータ活用が構造的制約だった。ジャーニー設計で年間会員+100万人・アプリDL後利用率約40%を達成した。",
+    "catchcopy": "500万人を少人数で回す、利用率40%の秘密",
+    "badges": [
+      "500万人を少人数で運用が困難",
+      "年間会員+100万人・利用率40%"
+    ],
+    "metrics": [
+      "年間会員 +100万人",
+      "アプリDL後利用率 約40%",
+      "500万人のデータを少人数で運用"
+    ],
+    "results": [
+      "500万人のデータを少人数で運用",
+      "ジャーニーで顧客体験を設計"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "yamada-bee-farm",
+    "url": "https://www.treasure.ai/ja/customers/yamada-bee-farm/",
+    "company": "株式会社山田養蜂場",
+    "sub": "",
+    "industries": [
+      "health",
+      "retail"
+    ],
+    "products": [
+      "cdp",
+      "ai_agent"
+    ],
+    "search": "山田養蜂場 CDP AI 顧客体験 ヘルスケア 通販 セグメンテーション パーソナライズ",
+    "description": "CDPとAIで実現する顧客体験。AIエージェント（パーソナライズ推進）を活用し、健康食品通販のCRM施策を高度化。",
+    "background": "",
+    "summary": "分析依頼がシステム室に集中し、セグメント抽出・共有に1〜2週間を要していた。AIエージェントで分析時間を数時間に短縮し、定期購入比率60%を達成した。",
+    "catchcopy": "分析が168倍速くなったら、施策が130本動き出した",
+    "badges": [
+      "分析依頼に1〜2週間かかっていた",
+      "分析時間を数時間に短縮・購入率60%"
+    ],
+    "metrics": [
+      "分析時間 1〜2週間→数時間",
+      "定期購入比率 60%"
+    ],
+    "results": [
+      "AIエージェントで顧客体験を深化",
+      "通販CRMのパーソナライズを強化"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2025-nobitel",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2025-nobitel/",
+    "company": "株式会社nobitel",
+    "sub": "",
+    "industries": [
+      "health",
+      "retail"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "nobitel AI CDP 顧客理解 コミュニケーション パーソナライズ 革新",
+    "description": "AI × CDPによる顧客理解の深化とコミュニケーション革新。ヘルスケア・通販領域でパーソナライズ施策を強化。",
+    "background": "",
+    "summary": "顧客IDの統合ができておらず、実質的なユニークユーザー数が把握できなかった。CDP基盤の整備で再予約率が増加してLTVが向上し、広告CPAを最適化した。",
+    "catchcopy": "",
+    "badges": [
+      "顧客IDの名寄せができていなかった",
+      "再予約率増加・LTV向上・CPA最適化"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "tdcw2025-oddspark",
+    "url": "https://www.treasure.ai/ja/customers/tdcw2025-oddspark/",
+    "company": "オッズ・パーク株式会社",
+    "sub": "",
+    "industries": [
+      "entertain"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "オッズパーク 公営競技 エンタメ CDP 再構築 データ民主化 AI活用",
+    "description": "データの民主化、CDP再構築と全社AI活用のリアル。公営競技オンラインサービスでデータ活用を全社展開。",
+    "background": "約240万人の会員データを抱える中、顧客情報が部門ごとに異なるシステムへ分散しており、横断的な把握が困難な状況にあった。施策立案のたびに複数システムからデータを収集・加工する必要があり、準備が整う頃にはデータがすでに古くなってしまうという鮮度の問題も深刻だった。",
+    "summary": "20年分のデータを抱えながら活用できているのはデータ部門の一部に限られていた。CDP再構築と全社AI活用の民主化により、全社員の8割以上がAIを活用する状態を実現した。",
+    "catchcopy": "全社員の8割がAIを使う会社、20年分が武器になった",
+    "badges": [
+      "データ活用がデータ部門のみに限定",
+      "全社員8割以上がAIを活用"
+    ],
+    "metrics": [
+      "全社員の8割以上がAI活用",
+      "20年分のデータを資産化"
+    ],
+    "results": [
+      "全社AIデータ活用を民主化",
+      "CDP再構築でデータ基盤を刷新"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "legacy-1997744b53bc",
+    "url": "",
+    "company": "湯快リゾート株式会社",
+    "sub": "",
+    "industries": [
+      "entertain"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "湯快リゾート 旅館 温泉 宿泊 顧客体験変革 リピート",
+    "description": "データで顧客体験を変革。温泉旅館チェーンとしてリピート顧客への最適なコミュニケーションを実現。",
+    "background": "",
+    "summary": "温泉旅館チェーンとしてリピーターへの個別対応が感覚値に依存していた。データで顧客体験を変革し、リピート顧客への最適なコミュニケーションを実現した。",
+    "catchcopy": "",
+    "badges": [
+      "リピーター獲得が感覚頼みだった",
+      "データでリピート顧客を仕組み化"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "looop",
+    "url": "https://www.treasure.ai/ja/customers/looop/",
+    "company": "株式会社Looop",
+    "sub": "",
+    "industries": [
+      "energy"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "Looop ループ 電力 エネルギー 解約率 パーソナライズ 告知",
+    "description": "プラン改定告知時の解約率を抑えたパーソナライズ活用。顧客ごとに最適なメッセージを配信し解約防止を実現。",
+    "background": "2025年の料金プラン改定に際し、顧客ごとに影響額が異なるにもかかわらず、個別対応できるデータ基盤が整っていなかった。電力データを活用した情報の出し分けができる環境になく、一斉配信では解約を促しかねないリスクがあった。",
+    "summary": "電力プランの改定告知で一斉配信を行うと解約が増えるリスクがあった。顧客ごとに最適なメッセージを配信し、解約率を想定の半分以下に抑制した。",
+    "catchcopy": "解約率を想定の半分以下に、データが離脱を食い止めた",
+    "badges": [
+      "一斉配信で解約増リスクがあった",
+      "解約率を想定の半分以下に抑制"
+    ],
+    "metrics": [
+      "解約率 想定の半分以下",
+      "解約率 想定の半分以下"
+    ],
+    "results": [
+      "解約率を想定の半分以下に抑制",
+      "パーソナライズで離脱防止"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "cdpw2025-mirarth-holdings",
+    "url": "https://www.treasure.ai/ja/customers/cdpw2025-mirarth-holdings/",
+    "company": "MIRARTHホールディングス株式会社",
+    "sub": "",
+    "industries": [
+      "realestate"
+    ],
+    "products": [
+      "cdp",
+      "ai_agent"
+    ],
+    "search": "MIRARTHホールディングス 不動産 AI DX 再起動 セグメンテーション データ分析AI",
+    "description": "不動産企業がAIと共に再起動するDX。AI Agentによるデータ分析とセグメンテーションで顧客接点を再設計。",
+    "background": "社内では「PoC疲れ」や「KPIのギャップ」が深刻化し、現場が動かない状態に陥っていた。10年以上稼働するレガシーシステムはデータ分析を前提に設計されておらず、顧客データの名寄せが困難で、外部コンサルタントへの依存によって運用コストも膨らんでいた。",
+    "summary": "社内でPoC疲れが深刻化し、外部コンサル依存でDXが進まない状況だった。AIとCDPの活用でDXの壁を乗り越え、セルフサービス型データ分析を実現した。",
+    "catchcopy": "DXの壁を越えたら、データが自分で走り出した",
+    "badges": [
+      "PoC疲れで現場が動かない状態",
+      "DXの壁を越えてデータ自走化"
+    ],
+    "metrics": [],
+    "results": [
+      "AIでDXの壁を乗り越え再起動",
+      "セルフサービス型分析を実現"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "subaru",
+    "url": "https://www.treasure.ai/customers/subaru/",
+    "company": "Subaru（スバル）",
+    "sub": "Global",
+    "industries": [
+      "auto"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "Subaru スバル 自動車 グローバル CDP データ統合 マーケティング ロイヤリティ global",
+    "description": "Treasure Data CDPで全社のデータを統合。購買傾向モデル・パーソナライズマーケティング・ロイヤリティ強化を実現。",
+    "background": "ディーラーやアプリ、SNSなど多数のソースからデータを収集していたものの、それらは分断・サイロ化されており、マーケティング戦略は経験則と限られたデータセットに依存していた。各車種の広告データは別々のエージェンシーが管理し、ファーストパーティデータの多くは社内各部門に散在していた。",
+    "summary": "ディーラーやSNSなど多数のソースのデータがサイロ化し、マーケティングは経験則に依存していた。CDP統合でコンバージョン率250%増・CPA38%削減・CTR350%増を達成した。",
+    "catchcopy": "CVR250%増・CPA38%減、同じ予算で結果が変わる",
+    "badges": [
+      "データがサイロ化し経験則に依存",
+      "CVR250%増・CPA38%削減達成"
+    ],
+    "metrics": [
+      "コンバージョン率 250%増",
+      "CPA 38%削減",
+      "CTR 350%増",
+      "$26M キャッシュバックキャンペーン成果"
+    ],
+    "results": [
+      "コンバージョン率 250%増",
+      "CPA 38%削減"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "greene-king",
+    "url": "https://www.treasure.ai/customers/greene-king/",
+    "company": "Greene King",
+    "sub": "Global (UK)",
+    "industries": [
+      "food"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "Greene King パブ 宿泊 UK 単一顧客ビュー 予約 global グローバル ホスピタリティ",
+    "description": "2,700以上のパブ・ブランドのデータを統合しシングルカスタマービューを構築。パーソナライズとオンライン予約向上を実現。",
+    "background": "2,700以上のパブと複数ブランドにまたがる顧客データが複数のレガシーシステムに分散しており、統合的な顧客把握が困難な状況にあった。ウェブサイトやアプリ、Wi-Fiログインなど豊富なデータを保有していたものの、大規模な分析には数ヶ月を要するという課題を抱えていた。",
+    "summary": "2,700以上のパブと複数ブランドのデータが分断され、統合的な顧客把握が困難だった。シングルカスタマービューを構築し、オンライン予約を30%増加させた。",
+    "catchcopy": "2700店舗を一元管理、予約が30%増えた仕組み",
+    "badges": [
+      "2,700店舗のデータが分断",
+      "オンライン予約30%増を実現"
+    ],
+    "metrics": [
+      "オンライン予約 30%増",
+      "オンライン予約 30% 増加"
+    ],
+    "results": [
+      "オンライン予約 30%増",
+      "360°統合顧客ビューを構築"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "six-flags-entertainment",
+    "url": "https://www.treasure.ai/customers/six-flags-entertainment/",
+    "company": "Six Flags Entertainment",
+    "sub": "Global (US)",
+    "industries": [
+      "entertain"
+    ],
+    "products": [
+      "cdp",
+      "journey"
+    ],
+    "search": "Six Flags エンタメ テーマパーク 来場 コスト削減 ジャーニー global グローバル",
+    "description": "カスタマージャーニーオーケストレーションによる来場促進・園内消費向上とテック統合によるコスト削減を実現。",
+    "background": "2024年のSix FlagsとCedar Fairの合併により大規模企業が誕生したものの、顧客データの統合とマーケティング技術の標準化という大きな課題に直面した。既存のCRMやデータ連携の仕組みは時代遅れで、今日の消費者が期待するパーソナライゼーションを提供できていなかった。",
+    "summary": "POS・チケット・ロイヤルティの各システムに顧客データが分散し、パーソナライズが困難だった。ジャーニー設計でコスト100万ドル超削減・3ヶ月以内に導入を完了した。",
+    "catchcopy": "100万ドル超削減、しかも3ヶ月で動き始めた",
+    "badges": [
+      "POSとチケットデータが断片化",
+      "コスト100万ドル超削減・3ヶ月導入"
+    ],
+    "metrics": [
+      "コスト 100万ドル超削減",
+      "3ヶ月以内に導入完了",
+      "コスト削減 $1M+"
+    ],
+    "results": [
+      "コスト 100万ドル超削減",
+      "3ヶ月以内に導入完了"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "online-game-developer",
+    "url": "https://www.treasure.ai/customers/online-game-developer/",
+    "company": "Global Online Game Developer",
+    "sub": "Global",
+    "industries": [
+      "entertain"
+    ],
+    "products": [
+      "cdp",
+      "audience"
+    ],
+    "search": "オンラインゲーム ROAS 広告効率 サブスクリプション ゲーム global グローバル リターゲティング",
+    "description": "ファーストパーティデータ統合でジオターゲティング・抑制・リターゲティング・予測モデリングを実現。",
+    "background": "",
+    "summary": "ファーストパーティデータが分断されており、広告のターゲティング精度に限界があった。データ統合でROAS65%改善・サブスク平均12%成長を達成した。",
+    "catchcopy": "ROAS65%改善、サブスクも12%伸びた全体最適の話",
+    "badges": [
+      "広告ターゲティングに精度限界",
+      "ROAS65%改善・サブスク12%成長"
+    ],
+    "metrics": [
+      "ROAS 65%改善",
+      "サブスク平均 12%成長",
+      "ROAS 65% 改善 / サブスク 12% 成長"
+    ],
+    "results": [
+      "ROAS 65%改善",
+      "サブスク平均 12%成長"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "dai-ichi-life",
+    "url": "https://www.treasure.ai/ja/customers/dai-ichi-life/",
+    "company": "第一生命保険株式会社",
+    "sub": "",
+    "industries": [
+      "finance"
+    ],
+    "products": [
+      "cdp"
+    ],
+    "search": "第一生命 保険 ミラシル オウンドメディア スコアリング ナーチャリング CDP Cold Warm Hot",
+    "description": "オウンドメディア「ミラシル」を核にCDPで顧客データ基盤を構築。Cold/Warm/Hot の3段階スコアリングで営業・ナーチャリングの精度を向上。",
+    "background": "デジタル上での顧客接点の構築・拡大が急務となっていた。顧客の興味関心や行動に即したコミュニケーションを取らなければ支持を得られないという認識のもと、適切なタイミングで最適な情報を届ける仕組みの整備が求められていた。",
+    "summary": "デジタル上での顧客接点の構築・拡大が急務となっていた。オウンドメディア起点の顧客基盤を構築し、3段階スコアリングで営業精度を向上させた。",
+    "catchcopy": "Hotと判定された顧客、実は成約率3倍だった",
+    "badges": [
+      "デジタル顧客接点の構築が急務",
+      "3段階スコアリングで営業精度向上"
+    ],
+    "metrics": [],
+    "results": [
+      "オウンドメディア起点の顧客基盤を構築",
+      "3段階スコアリングで営業精度向上"
+    ],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "asako-tsi-joint-webinar",
+    "url": "https://www.treasuredata.co.jp/customers/asako-tsi-joint-webinar/",
+    "company": "株式会社TSI × アサコ",
+    "sub": "合同ウェビナー",
+    "industries": [
+      "retail",
+      "fashion",
+      "ec"
+    ],
+    "products": [
+      "cdp",
+      "engage",
+      "journey",
+      "audience"
+    ],
+    "search": "TSI アサコ 合同ウェビナー ジャーニー Engage Studio オーディエンス パーソナライズ",
+    "description": "ジャーニーオーケストレーション・Engage Studio・オーディエンススタジオを活用したパーソナライズ施策の実践事例を共有。",
+    "background": "",
+    "summary": "Engage Studio・Journey・Audience Studioを活用したパーソナライズ施策の知見共有。複数製品を連携させた実践的なマーケティング事例を公開した。",
+    "catchcopy": "",
+    "badges": [
+      "Engage/Journey/Audienceの活用が課題",
+      "複数製品連携のパーソナライズを実現"
+    ],
+    "metrics": [],
+    "results": [],
+    "featured": true,
+    "source": "curated"
+  },
+  {
+    "slug": "q-sai-generative-ai-utilization",
+    "url": "https://www.treasure.ai/ja/customers/q-sai-generative-ai-utilization/",
+    "company": "キューサイ株式会社",
+    "sub": "生成AI活用編",
+    "industries": [
+      "consumer",
+      "ec"
+    ],
+    "products": [
+      "cdp",
+      "journey",
+      "ai_agent"
+    ],
+    "search": "キューサイ 生成AI活用 メール作成 経営判断 AI CRM ジャーニー",
+    "description": "生成AIをメール作成・経営判断支援まで幅広く活用。CDP基盤の上でAIエージェントを活用し業務効率と施策品質を同時に向上。",
+    "background": "テレビインフォマーシャルを月間2000〜2500回放映する単品リピート通販モデルに依存しており、デジタルシフトへの対応が急務となっていた。施策間の連携ができずバラバラに多様な施策を実施している状態で、経営層がBIツールの操作に不慣れなため意思決定のスピードに課題を抱えていた。",
+    "summary": "施策に必要なデータ抽出・分析のたびにエンジニアへの依頼が必要で業務効率に課題があった。生成AIで精度8〜9割のメール作成から経営判断支援まで自動化し、施策品質を向上した。",
+    "catchcopy": "AIが9割書いて、経営判断まで自動化した",
+    "badges": [
+      "分析のたびエンジニアへ依頼",
+      "AIで文面精度8〜9割・経営判断まで自動化"
+    ],
+    "metrics": [
+      "生成AI文面精度 8〜9割"
+    ],
+    "results": [
+      "メール作成から経営判断支援まで自動化",
+      "業務効率と施策品質を同時向上"
+    ],
+    "featured": true,
+    "source": "curated"
+  }
+]
