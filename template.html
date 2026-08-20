@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Treasure AI 導入事例まとめ</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Hiragino Sans", "Meiryo", sans-serif;
+      background: #f0f2f7;
+      color: #1a1a2e;
+      line-height: 1.6;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, #1e0a3c 0%, #3a0ca3 55%, #7209b7 100%);
+      color: white;
+      padding: 40px 32px 36px;
+      text-align: center;
+    }
+    header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: .02em; margin-bottom: 6px; }
+    header p  { font-size: .9rem; opacity: .75; }
+
+    /* ── Stats ── */
+    .stats-bar {
+      display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+      background: white; padding: 18px 32px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .stat { text-align: center; }
+    .stat-number { font-size: 1.75rem; font-weight: 700; color: #3a0ca3; }
+    .stat-label  { font-size: .75rem; color: #64748b; margin-top: 2px; }
+
+    /* ── Filter panel ── */
+    .filter-panel {
+      max-width: 1300px; margin: 20px auto 0; padding: 0 24px;
+      display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start;
+    }
+    .filter-group { display: flex; flex-direction: column; gap: 8px; }
+    .filter-group-label {
+      font-size: .7rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: #94a3b8;
+    }
+    .filter-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .chip {
+      padding: 5px 13px; border: 1.5px solid #d1d5db; border-radius: 20px;
+      background: white; font-size: .78rem; cursor: pointer;
+      transition: all .15s; color: #374151; white-space: nowrap; user-select: none;
+    }
+    .chip:hover   { border-color: #3a0ca3; color: #3a0ca3; }
+    .chip.active  { background: #3a0ca3; border-color: #3a0ca3; color: white; font-weight: 600; }
+
+    /* product chip colors when active */
+    .chip[data-prod].active { background: #7209b7; border-color: #7209b7; }
+    .chip[data-prod="engage"].active    { background: #0369a1; border-color: #0369a1; }
+    .chip[data-prod="journey"].active   { background: #047857; border-color: #047857; }
+    .chip[data-prod="ai_agent"].active  { background: #b45309; border-color: #b45309; }
+    .chip[data-prod="cleanroom"].active { background: #9f1239; border-color: #9f1239; }
+    .chip[data-prod="cdp"].active       { background: #3a0ca3; border-color: #3a0ca3; }
+    .chip[data-prod="audience"].active  { background: #065f46; border-color: #065f46; }
+
+    /* search */
+    .search-wrap { flex: 1; min-width: 200px; align-self: flex-end; }
+    .search-box {
+      width: 100%; padding: 8px 14px; border: 1.5px solid #d1d5db; border-radius: 20px;
+      font-size: .88rem; outline: none; transition: border-color .2s;
+    }
+    .search-box:focus { border-color: #3a0ca3; }
+
+    /* active-filter summary */
+    .active-summary {
+      max-width: 1300px; margin: 10px auto 0; padding: 0 24px;
+      font-size: .82rem; color: #64748b; min-height: 20px;
+    }
+    .active-summary span { color: #3a0ca3; font-weight: 600; }
+
+    /* ── Card grid ── */
+    .grid {
+      max-width: 1300px; margin: 16px auto 48px; padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 1px 3px rgba(0,0,0,.05);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      text-decoration: none; color: inherit;
+      transition: transform .15s, box-shadow .15s, border-color .15s;
+    }
+    a.card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(58,12,163,.1);
+      border-color: #a78bfa;
+    }
+    a.card:hover .company-name::after { opacity: 1; }
+    .card.hidden { display: none; }
+    .card.unlinked .company-name::after { content: ""; }
+    .unlinked-note { font-size: .68rem; color: #9ca3af; margin-top: 2px; }
+
+    /* 数字帯 — 数字がある事例のみ */
+    .card-metrics {
+      background: linear-gradient(120deg, #1e0a3c, #4c1d95);
+      padding: 10px 16px;
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .card-metrics:empty { display: none; }
+    .metric {
+      font-size: .75rem; font-weight: 700; color: white;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.2);
+      padding: 3px 10px; border-radius: 99px;
+      white-space: normal;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+    .metric::before { content: "★ "; font-size: .6rem; opacity: .7; }
+
+    /* カード本体 */
+    .card { padding: 18px 20px; gap: 12px; }
+    .card-metrics { margin: -18px -20px 0; }
+    .card-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 10px;
+    }
+    .company-name {
+      font-size: .95rem; font-weight: 700;
+      color: #111827; line-height: 1.4;
+    }
+    .company-name::after {
+      content: " ↗"; font-size: .7em;
+      color: #7c3aed; opacity: 0; transition: opacity .15s;
+    }
+    .company-sub { font-size: .73rem; color: #6b7280; margin-top: 2px; }
+    .ind-badge {
+      font-size: .67rem; font-weight: 600;
+      padding: 3px 9px; border-radius: 99px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .ind-it        { background: #dbeafe; color: #1e40af; }
+    .ind-media     { background: #e0f2fe; color: #0369a1; }
+    .ind-finance   { background: #fef9c3; color: #854d0e; }
+    .ind-fashion   { background: #fce7f3; color: #9d174d; }
+    .ind-food      { background: #fef3c7; color: #92400e; }
+    .ind-retail    { background: #d1fae5; color: #065f46; }
+    .ind-auto      { background: #e0e7ff; color: #3730a3; }
+    .ind-transport { background: #ccfbf1; color: #0f766e; }
+    .ind-health    { background: #f0fdf4; color: #166534; }
+    .ind-consumer  { background: #ffe4e6; color: #9f1239; }
+    .ind-entertain { background: #fdf4ff; color: #7e22ce; }
+    .ind-energy    { background: #fef9c3; color: #713f12; }
+    .ind-realestate{ background: #f1f5f9; color: #475569; }
+    .ind-ec        { background: #ecfdf5; color: #047857; }
+
+    .description { font-size: .85rem; color: #4b5563; line-height: 1.6; }
+
+    /* 成果タグ */
+    .result-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+    .result-tag {
+      font-size: .72rem; font-weight: 600;
+      color: #15803d; background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      padding: 2px 8px; border-radius: 4px;
+    }
+    .result-tag::before { content: "✓  "; font-size: .65rem; }
+
+    /* 製品タグ */
+    .prod-tags {
+      display: flex; gap: 4px; flex-wrap: wrap;
+      margin-top: auto; padding-top: 10px;
+      border-top: 1px solid #f3f4f6;
+    }
+    .prod-tag { font-size: .67rem; font-weight: 600; padding: 2px 7px; border-radius: 4px; }
+    .pt-cdp       { background: #ede9fe; color: #4c1d95; }
+    .pt-engage    { background: #dbeafe; color: #1e40af; }
+    .pt-journey   { background: #d1fae5; color: #065f46; }
+    .pt-ai_agent  { background: #fef3c7; color: #92400e; }
+    .pt-cleanroom { background: #fee2e2; color: #991b1b; }
+    .pt-audience  { background: #e0f2fe; color: #075985; }
+    .pt-other     { background: #f1f5f9; color: #6b7280; }
+
+    .no-results {
+      grid-column: 1/-1; text-align: center; color: #94a3b8;
+      padding: 60px 0; font-size: .95rem;
+    }
+
+    footer {
+      text-align: center; padding: 24px; font-size: .78rem; color: #94a3b8;
+      border-top: 1px solid #e2e8f0;
+    }
+    footer a { color: #3a0ca3; text-decoration: none; }
+
+    
+/* ── Chatbot ── */
+    .chat-fab {
+      position: fixed; bottom: 28px; right: 28px; z-index: 2000;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, #3a0ca3, #7209b7);
+      color: white; border: none; cursor: pointer;
+      font-size: 1.4rem; box-shadow: 0 4px 16px rgba(58,12,163,.4);
+      transition: transform .15s, box-shadow .15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .chat-fab:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(58,12,163,.5); }
+
+    .chat-window {
+      position: fixed; bottom: 96px; right: 28px; z-index: 2000;
+      width: 360px; max-height: 520px;
+      background: white; border-radius: 16px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.18);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      transform: scale(.9) translateY(16px);
+      opacity: 0; pointer-events: none;
+      transition: transform .2s, opacity .2s;
+    }
+    .chat-window.open {
+      transform: scale(1) translateY(0);
+      opacity: 1; pointer-events: all;
+    }
+    .chat-header {
+      background: linear-gradient(120deg, #1e0a3c, #4c1d95);
+      color: white; padding: 14px 16px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-shrink: 0;
+    }
+    .chat-header-title { font-size: .9rem; font-weight: 700; }
+    .chat-header-sub   { font-size: .72rem; opacity: .75; margin-top: 1px; }
+    .chat-header-close {
+      background: rgba(255,255,255,.15); border: none; color: white;
+      width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+      font-size: .85rem; display: flex; align-items: center; justify-content: center;
+    }
+    .chat-messages {
+      flex: 1; overflow-y: auto; padding: 16px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .msg {
+      max-width: 88%; font-size: .84rem; line-height: 1.55;
+      padding: 9px 12px; border-radius: 12px;
+    }
+    .msg-bot {
+      background: #f3f4f6; color: #1f2937;
+      border-bottom-left-radius: 4px; align-self: flex-start;
+    }
+    .msg-user {
+      background: #4c1d95; color: white;
+      border-bottom-right-radius: 4px; align-self: flex-end;
+    }
+    .msg-thinking { color: #9ca3af; font-style: italic; }
+    .msg a { color: #4c1d95; }
+    .msg-user a { color: #c4b5fd; }
+    .chat-suggestions {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 0 16px 10px; flex-shrink: 0;
+    }
+    .chat-suggest-btn {
+      background: #f3f4f6; border: 1px solid #e5e7eb;
+      border-radius: 99px; padding: 4px 10px;
+      font-size: .76rem; color: #374151; cursor: pointer;
+      transition: background .15s;
+    }
+    .chat-suggest-btn:hover { background: #ede9fe; border-color: #a78bfa; color: #4c1d95; }
+    .chat-input-row {
+      display: flex; gap: 8px; padding: 10px 12px 12px;
+      border-top: 1px solid #f3f4f6; flex-shrink: 0;
+    }
+    .chat-input {
+      flex: 1; border: 1.5px solid #e5e7eb; border-radius: 8px;
+      padding: 7px 10px; font-size: .84rem; outline: none;
+      font-family: inherit;
+      transition: border-color .15s;
+    }
+    .chat-input:focus { border-color: #7c3aed; }
+    .chat-send {
+      background: #4c1d95; color: white; border: none;
+      border-radius: 8px; padding: 7px 14px; cursor: pointer;
+      font-size: .84rem; font-weight: 600;
+      transition: background .15s;
+    }
+    .chat-send:hover { background: #3a0ca3; }
+    .chat-send:disabled { background: #d1d5db; cursor: default; }
+
+    .side-panel { position: fixed; inset: 0; z-index: 500; pointer-events: none; } .chat-fab, .chat-window { z-index: 3000 !important; }
+    .side-panel.open { pointer-events: all; }
+
+    .panel-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0); transition: background .25s;
+    }
+    .side-panel.open .panel-overlay { background: rgba(0,0,0,.35); }
+
+    .panel-drawer {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: min(480px, 95vw);
+      background: white;
+      display: flex; flex-direction: column;
+      box-shadow: -4px 0 24px rgba(0,0,0,.12);
+      transform: translateX(100%);
+      transition: transform .28s cubic-bezier(.4,0,.2,1);
+    }
+    .side-panel.open .panel-drawer { transform: translateX(0); }
+
+    .panel-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      padding: 24px 24px 20px;
+      border-bottom: 1px solid #f3f4f6;
+      flex-shrink: 0;
+    }
+    .panel-company { font-size: 1.1rem; font-weight: 700; color: #111827; line-height: 1.3; }
+    .panel-sub { font-size: .8rem; color: #6b7280; margin-top: 4px; }
+    .panel-close {
+      background: #f3f4f6; border: none; border-radius: 50%;
+      width: 32px; height: 32px; font-size: .85rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-left: 12px;
+      transition: background .15s;
+    }
+    .panel-close:hover { background: #e5e7eb; }
+
+    .panel-body {
+      flex: 1; overflow-y: auto;
+      padding: 20px 24px;
+      display: flex; flex-direction: column; gap: 24px;
+    }
+    .panel-section {}
+    .panel-section-title {
+      font-size: .78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; color: #9ca3af;
+      margin-bottom: 10px;
+    }
+    .panel-text {
+      font-size: .88rem; color: #374151; line-height: 1.7;
+    }
+    .panel-metrics { display: flex; flex-direction: column; gap: 6px; }
+    .panel-metric-item {
+      display: flex; align-items: center; gap: 8px;
+      background: #f5f3ff; border-left: 3px solid #7c3aed;
+      padding: 8px 12px; border-radius: 0 6px 6px 0;
+      font-size: .88rem; font-weight: 600; color: #4c1d95;
+    }
+    .panel-results { display: flex; flex-direction: column; gap: 6px; }
+    .panel-result-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .88rem; color: #374151;
+    }
+    .panel-result-item::before { content: "✓"; color: #15803d; font-weight: 700; flex-shrink: 0; }
+    .panel-prods { display: flex; gap: 6px; flex-wrap: wrap; }
+    .panel-prod-tag {
+      font-size: .78rem; font-weight: 600; padding: 4px 10px; border-radius: 4px;
+    }
+
+    .panel-footer {
+      padding: 16px 24px; border-top: 1px solid #f3f4f6; flex-shrink: 0;
+    }
+    .panel-btn {
+      display: block; text-align: center;
+      background: linear-gradient(120deg, #1e0a3c, #4c1d95);
+      color: white; text-decoration: none;
+      padding: 12px; border-radius: 8px;
+      font-size: .88rem; font-weight: 600;
+      transition: opacity .15s;
+    }
+    .panel-btn:hover { opacity: .9; }
+
+
+    /* キャッチコピー */
+    .card-catchcopy {
+      font-size: .82rem; font-weight: 600;
+      color: #4c1d95;
+      background: #f5f3ff;
+      border-left: 3px solid #7c3aed;
+      padding: 7px 12px;
+      border-radius: 0 6px 6px 0;
+      line-height: 1.5;
+    }
+    /* 社名の長さに応じてフォントを縮小 */
+    .company-name {
+      font-size: .95rem; font-weight: 700;
+      color: #111827; line-height: 1.4;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+
+
+
+    /* サマリー帯 */
+    /* サマリー帯 — card-metricsと完全同一スタイル */
+    .card-summary-band {
+      background: linear-gradient(120deg, #1e0a3c, #4c1d95);
+      padding: 10px 16px;
+      display: flex; flex-wrap: wrap; gap: 6px;
+      align-items: center;
+      overflow: hidden;
+    }
+    .card-summary-band .summary-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: .75rem; font-weight: 700; color: white;
+      background: rgba(255,255,255,.15);
+      border: 1px solid rgba(255,255,255,.2);
+      padding: 3px 10px; border-radius: 99px;
+      white-space: nowrap;
+    }
+    .card-summary-band .summary-badge::before { content: "★ "; font-size: .6rem; opacity: .7; }
+
+    /* FAB override */
+    #chat-fab { position: fixed !important; bottom: 28px !important; right: 28px !important; z-index: 9999 !important; display: flex !important; }
+    #chat-window { position: fixed !important; bottom: 96px !important; right: 28px !important; z-index: 9999 !important; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Treasure AI 導入事例まとめ</h1>
+  <p>treasure.ai/ja/customers 掲載事例 ― 業界 × 製品・機能で絞り込み（<span id="sync-date">自動同期</span>）</p>
+</header>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-number" id="visible-count">0</div><div class="stat-label">表示中の事例</div></div>
+  <div class="stat"><div class="stat-number" id="total-count">0</div><div class="stat-label">総事例数</div></div>
+  <div class="stat"><div class="stat-number">14</div><div class="stat-label">業種</div></div>
+  <div class="stat"><div class="stat-number">6</div><div class="stat-label">製品・機能区分</div></div>
+</div>
+
+<div class="filter-panel">
+
+  <!-- 業種フィルター -->
+  <div class="filter-group">
+    <div class="filter-group-label">業種</div>
+    <div class="filter-row" id="ind-row">
+      <span class="chip active" data-ind="all">すべて</span>
+      <span class="chip" data-ind="it">IT・テクノロジー</span>
+      <span class="chip" data-ind="media">メディア・通信</span>
+      <span class="chip" data-ind="finance">金融・保険</span>
+      <span class="chip" data-ind="retail">流通・小売</span>
+      <span class="chip" data-ind="ec">EC</span>
+      <span class="chip" data-ind="food">飲食</span>
+      <span class="chip" data-ind="consumer">消費財</span>
+      <span class="chip" data-ind="fashion">ファッション</span>
+      <span class="chip" data-ind="auto">自動車・モビリティ</span>
+      <span class="chip" data-ind="transport">運輸・交通</span>
+      <span class="chip" data-ind="health">医療・ヘルスケア</span>
+      <span class="chip" data-ind="entertain">エンタメ・スポーツ</span>
+      <span class="chip" data-ind="energy">エネルギー</span>
+      <span class="chip" data-ind="realestate">不動産</span>
+    </div>
+  </div>
+
+  <!-- 製品・機能フィルター（複数選択） -->
+  <div class="filter-group">
+    <div class="filter-group-label">製品・機能（複数選択可）</div>
+    <div class="filter-row" id="prod-row">
+      <span class="chip" data-prod="cdp">CDP</span>
+      <span class="chip" data-prod="engage">Engage Studio</span>
+      <span class="chip" data-prod="journey">Journey</span>
+      <span class="chip" data-prod="ai_agent">AI Agent Foundry</span>
+      <span class="chip" data-prod="cleanroom">Clean Room</span>
+      <span class="chip" data-prod="audience">Audience Studio</span>
+    </div>
+  </div>
+
+  <!-- 検索 -->
+  <div class="search-wrap">
+    <input class="search-box" id="search" type="text" placeholder="会社名・キーワードで検索...">
+  </div>
+
+</div>
+
+<div class="active-summary" id="summary"></div>
+
+<!-- ═══════════════════════════════════════════════
+     CARD DATA
+     data-inds  : スペース区切りの業種キー（複数可）
+     data-prods : スペース区切りの製品キー（複数可）
+     data-search: 検索用フリーテキスト
+════════════════════════════════════════════════ -->
+<div class="grid" id="grid">
+  <!-- CASES_START -->
+  <!-- CASES_END -->
+
+  <div class="no-results" id="no-results" style="display:none;">
+    条件に一致する事例が見つかりませんでした。
+  </div>
+
+</div><!-- /grid -->
+
+<footer>
+  出典: <a href="https://www.treasure.ai/ja/customers" target="_blank">treasure.ai/ja/customers</a> &amp; <a href="https://www.treasuredata.com/customers/" target="_blank">treasuredata.com/customers</a><br>
+  2026年6月時点の掲載情報をもとに作成
+</footer>
+
+
+<!-- ── Chatbot ── -->
+<button class="chat-fab" id="chat-fab" title="事例を検索する">💬</button>
+
+<div class="chat-window" id="chat-window">
+  <div class="chat-header">
+    <div>
+      <div class="chat-header-title">事例検索アシスタント</div>
+      <div class="chat-header-sub">業種・課題・製品で事例を探せます</div>
+    </div>
+    <button class="chat-header-close" id="chat-close">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="msg msg-bot">こんにちは！Treasure AI の導入事例について何でも聞いてください。<br><br>例えば「製造業の事例は？」「解約率を改善した事例ある？」など気軽にどうぞ。</div>
+  </div>
+  <div class="chat-suggestions" id="chat-suggestions">
+    <button class="chat-suggest-btn">製造業・自動車の事例</button>
+    <button class="chat-suggest-btn">AI Agent Foundry活用</button>
+    <button class="chat-suggest-btn">工数削減した事例</button>
+    <button class="chat-suggest-btn">金融業の事例</button>
+    <button class="chat-suggest-btn">ROASが改善した事例</button>
+    <button class="chat-suggest-btn">Engage Studio使用</button>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-input" type="text" placeholder="質問を入力…" autocomplete="off">
+    <button class="chat-send" id="chat-send">送信</button>
+  </div>
+</div>
+
+
+<div id="side-panel" class="side-panel">
+  <div class="panel-overlay" id="panel-overlay"></div>
+  <div class="panel-drawer">
+    <div class="panel-header">
+      <div>
+        <div class="panel-company" id="panel-company"></div>
+        <div class="panel-sub" id="panel-sub"></div>
+      </div>
+      <button class="panel-close" id="panel-close">✕</button>
+    </div>
+    <div class="panel-body">
+      <section class="panel-section" id="panel-bg-section">
+        <h3 class="panel-section-title">📋 導入背景・課題</h3>
+        <p class="panel-text" id="panel-bg"></p>
+      </section>
+      <section class="panel-section" id="panel-metrics-section">
+        <h3 class="panel-section-title">★ 定量的な成果</h3>
+        <div class="panel-metrics" id="panel-metrics"></div>
+      </section>
+      <section class="panel-section" id="panel-results-section">
+        <h3 class="panel-section-title">✓ 成果サマリー</h3>
+        <div class="panel-results" id="panel-results"></div>
+      </section>
+      <section class="panel-section" id="panel-prods-section">
+        <h3 class="panel-section-title">🔧 活用製品・機能</h3>
+        <div class="panel-prods" id="panel-prods"></div>
+      </section>
+    </div>
+    <div class="panel-footer">
+      <a id="panel-link" href="#" target="_blank" rel="noopener noreferrer" class="panel-btn">
+        事例詳細を見る ↗
+      </a>
+    </div>
+  </div>
+</div>
+
+
+<script>
+const BACKGROUNDS = {
+  "tdcw2025-mitsubishi-electric-ibm": "営業情報が事業部ごとに分断されており、システム間でデータがつながっていない状態だった。複数部門が連携して営業活動を行う際には属人的な情報共有に頼らざるを得ず、同一顧客への重複訪問も発生していた。",
+  "ps-ntt-integration": "AI Agent FoundryやEngage Studioなど新機能の高度化により、マニュアル参照だけでは限界を感じる状況となった。「どう組み上げるか」というアーキテクチャの質が問われるようになり、専門的な技術支援の必要性が高まっていた。",
+  "tdcw2025-nttdata-qualtrics": "多くの企業はCDPで顧客データを保有しながらも業務データ偏重のアプローチに陥っており、顧客が「なぜその行動を取ったのか」という感情や理由まで踏み込めていなかった。顧客中心主義経営を実践できている企業は全体の約3％に過ぎないという厳しい現実があった。",
+  "fbj": "顧客情報がEC・メール配信ツール・SFAなどに分散しており、部門横断の活用ができていなかった。マーケティングツールは導入済みながらほぼ一斉配信にとどまり、個別のリード育成への対応が困難な状況だった。",
+  "tdcw2024legoliss": "顧客情報がサービスごとに点在し管理も属人化していた。データ収集のたびに担当営業が各管理部門へ個別に問い合わせる必要があり、営業・管理双方に大きな負荷が生じていた。",
+  "softbank-mobile-promote": "社内に数百のシステム・数千のDBを抱え、散在するデータの収集に多大な時間を要していた。分析に必要なデータ抽出だけで数日かかる状況で、PDCAサイクルの高速化が大きな課題だった。",
+  "softbank-it": "各事業部のエンジニアが自らSQLでデータをダウンロードするという非効率な運用が続いていた。ローカル環境へのダウンロードはセキュリティリスクを伴い、通信キャリアとして顧客データ保護が事業の重要課題となっていた。",
+  "softbank01": "法人営業が人海戦術に依存し、マーケティング部門ではExcel・Accessによるデータ集計に工数が取られ十分な分析ができていなかった。デジタル施策による集客と営業連携という理想はあっても実現への道筋が見えていなかった。",
+  "tdcw2025-softbank": "インサイドセールスによる顧客数の急増に伴い、人によるアナログ対応では全顧客へのサポートに限界が生じていた。M&Aを通じた事業拡大の過程でシステムやデータが分散・サイロ化し、統合的な活用が困難な状況にあった。",
+  "plazma31-tsi-shueisha": "各事業部や編集部ごとに個別最適なデータ活用は行われていたものの、全社横断でサービスをまたぐ形ではデータを活用しきれていなかった。GDPR・ITP等の環境変化への対応も急務となり、データのサイロ化解消が課題として浮上した。",
+  "mainichi-newspapers-tsi": "運用型広告の配信がプラットフォームのアルゴリズムにより既存顧客に偏る傾向があった。潜在顧客へのアッパーファネル施策が不足し、Cookie規制の強化により新規ユーザーの正確な計測が困難になるという構造的問題もあった。",
+  "wowow": "分析依頼からSQL作成までの手戻りが多発しエンジニアのリソースが圧迫されていた。分析依頼から施策提案まで2週間程度かかるケースもあり、アンケートへの目視タグ付けなど非効率な作業負担も存在していた。",
+  "dai-ichi-life": "デジタル上での顧客接点の構築・拡大が急務となっていた。顧客の興味関心や行動に即したコミュニケーションを取らなければ支持を得られないという認識のもと、適切なタイミングで最適な情報を届ける仕組みの整備が求められていた。",
+  "tdcw2025-chibabank-ntt-integration": "千葉銀行では顧客データがオンプレミス型DBに分散しており、手作業での抽出が必要なため施策のほとんどが単発にとどまっていた。担当者のスキル差によって施策実施スピードにばらつきが生じており、アプリ・Web・店舗など複数の接点に顧客データが分散していたことも、顧客理解を深める上での大きな障壁となっていた。",
+  "sompo-himawari-life-insurance": "Treasure Data CDPが導入済みでデータは蓄積されていたものの、セキュリティ上の制約からデータが複数の部門やツールに分散しておりCDPへの統合が進んでいなかった。非エンジニアのマーケターがCDPを直接操作することをためらい、ターゲットリスト作成に長いプロセスと工数がかかっていた。",
+  "hirogin": "デジタル化の進展により銀行窓口への来店者数が減少し、対面での顧客接点が失われつつあった。アプリ利用履歴やサイト閲覧ログなどのデジタル行動データは基幹システムと分散管理されており、顧客軸で取引とデジタル行動をまたいで追うことができない状態だった。",
+  "tsi-llm": "外部プラットフォームとの連携に開発工数が多くかかり、運用効率が低下していた。顧客データが部門・チャネルごとに分断され、一元的な顧客把握が困難な状況にあった。セグメント抽出やリスト配信作業がアドホック的に行われており、マーケティング施策の自動化・高度化が急務となっていた。",
+  "cdpw2025-tsi": "CDPと各種マーケティングツールの連携に開発対応が必要で、連携基盤の構築に手間がかかっていた。広告ターゲティングやセグメント抽出などの作業工数が多く、より付加価値の高い業務に時間を充てることが難しかった。複数チャネルに分散した顧客データを統合できておらず、ユーザー単位での一貫したコミュニケーションの実現が課題となっていた。",
+  "takara-tomy": "少子化により従来の子ども向け市場だけでは成長が見込みにくく、自社ECサイトでの顧客コミュニケーション強化が必要だったが、会員情報・行動履歴・購買データが統合されていなかった。新商品発売時には外部制作会社への情報連携や手作業でのメッセージ作成が続いており、業務効率の面でも改善が求められていた。",
+  "tdcw2025-istyle-hiveiq": "@cosmeや店舗・ECから膨大なデータを蓄積していたものの、命名ルールが煩雑で欲しいデータが見つからない状況にあった。データ抽出にはSQLの知識が必要なためエンジニアへの依頼が不可欠で業務に時間がかかるという問題を抱えており、非エンジニアのコンサルタントが自律的にデータを活用できる体制の構築が急務となっていた。",
+  "sanrio": "データに基づく意思決定を経営強化の手段として注目していたが、社内だけでは専門人材の確保・育成に限界があった。購買データに留まらず生活者視点のインサイトを企画やマーケティングへ活かすという高度なニーズにも応えられる体制が整っていなかった。",
+  "tdcw2025-sanrio": "キャラクターグッズの販売による売上・利益以外に、顧客がキャラクターと接している時間という無形の資産を可視化できていなかった。個々のファンの深いインサイトを理解するための分析手法や、データとAIを活用した体系的なマーケティングフレームワークの構築が求められていた。",
+  "owndays": "顧客データを保有していたものの、IT部門しかアクセスできず、マーケティング担当者が施策を実行するたびに依頼が必要で平均1週間のリードタイムが生じていた。コミュニケーション施策は画一的なものに限られており、顧客セグメントに応じた柔軟なアプローチが困難な状況だった。",
+  "puma": "顧客データの大半はメールシステムで管理されており、店舗側にはデータ取得の仕組みが整っていなかった。オンライン施策が店舗集客にどう貢献したかを測定できず、チャネルをまたいだ効果検証が困難な状態だった。クッキーレス社会への対応という外部環境の変化も、統合的なデータ基盤の整備を急ぐ動機となっていた。",
+  "circluxe": "買取部門と販売部門の顧客データが基幹システム上で別々に管理されており、両者を統合した顧客理解ができていなかった。中古ブランド品はすべて一点ものであるため個別対応が必要だが、複雑なアドホック分析をすべて人手で行うには限界があり、データに基づいた商品ごとの施策実行が難しい状態だった。",
+  "equipe": "複数の販売チャネルを持つ中、顧客一人ひとりを深く分析してマーケティングに活かせる環境が整っていなかった。メール・LINE・Web接客ツールといった異なるタッチポイント間での顧客コミュニケーションに一貫性が欠けており、購入後も同一商品のレコメンドが繰り返されるなど目指す顧客体験の実現を阻む問題が重なっていた。",
+  "suntory": "「BtoBtoC」モデルのため、消費者の購買行動や嗜好を直接把握することが困難だった。LINE公式アカウントで多数のフォロワーを獲得しているものの、ターゲットの範囲が狭く適切なセグメントにメッセージを届けるのが難しい状況で、配信範囲を広げると関心の低いユーザーにも情報が届き、開封率の低下やROI悪化が懸念されていた。",
+  "asahi-beer": "BtoBtoCのビジネス構造上、顧客との直接的な接点が限られており、「情報取得において弱者」という状況にあった。宣伝部とデジタルマーケティング部がサイロ化されていたため、メディア広告のセカンドパーティデータと自社のファーストパーティデータを連携できず、一貫したコミュニケーションが困難だった。",
+  "kfcj": "公式アプリやSNS、メールマガジンなどのデータベースが個別に存在し、顧客IDもチャネルごとにバラバラに発行されていたため、購買行動を一連の流れで把握できていなかった。顧客の属性や購買傾向を横断的に分析する統合基盤が存在せず、パーソナライズされたコミュニケーションの実現が困難だった。",
+  "q-sai/": "長年テレビCMや電話注文を主力チャネルとしてきたが、消費者のデジタル化に伴いECの重要性が高まる中、顧客との継続的なコミュニケーションが困難な状況にあった。オフライン・オンライン間でデータがサイロ化しており、統合的なマーケティング施策の実行やLTV最大化が妨げられていた。",
+  "q-sai-generative-ai-utilization": "テレビインフォマーシャルを月間2000〜2500回放映する単品リピート通販モデルに依存しており、デジタルシフトへの対応が急務となっていた。施策間の連携ができずバラバラに多様な施策を実施している状態で、経営層がBIツールの操作に不慣れなため意思決定のスピードに課題を抱えていた。",
+  "plazma13-case-study-yamaha-motor": "「車体番号や登録番号を主語にしたデータ」しか存在せず、顧客IDを軸としたデータ基盤が整備されていなかった。製品販売が主にディーラー経由であったため顧客と直接コミュニケーションする手段が限られており、オンライン・オフラインをまたいだカスタマージャーニーの全体像を把握することができていなかった。",
+  "cdpw2025-yamaha-motor": "BtoBtoC構造により小売店が顧客接点を持つため、詳細な購買情報の取得が困難な状況にあった。オンラインではクッキーによる匿名データは収集できるものの個人単位での行動把握ができず、「接点はあっても、データが足りていなかった」状態だった。",
+  "tdcw2025-nissan": "部門やチャネルごとに顧客データが分散しており、「断片的な顧客理解」という壁に直面していた。メール施策では開封率・クリック率が低下する一方でコストは増加し、ROIが悪化していた。顧客の行動データを横断的に把握できず、適切な意思決定と行動の壁になっていた。",
+  "jreast-interview-1": "各事業（駅ビル・Suica・ビューカードなど）が個別にポイントプログラムを運営しており、顧客データが分断されていた。各サービスが独立してマーケティングを展開していたため、顧客のLTVを横断的に把握・向上させることが困難な状況だった。",
+  "jreast-interview-2": "従来のシステム開発はウォーターフォール型が中心で、スピード感のあるデータ活用施策を実行できる体制が整っていなかった。CDPを活用したデータマーケティングが進む中で、施策精度のさらなる向上が課題となっていた。",
+  "cdpw2025-jre": "鉄道会社はチケットに個人情報が紐づかないため、個々の顧客を特定することが難しく、きめ細かいCRMの実施が困難な状況にあった。収益の多くを輸送サービスに依存する中、生活サービス事業の拡大に向けてOne to Oneコミュニケーションを実現する仕組みが求められていた。",
+  "openstreet": "500万人規模の会員データを抱えながら、本部機能が非常にコンパクトな少人数体制という構造的制約を持っていた。アプリダウンロードから数日以内に利用するのは40％程度にとどまり、残る多数のユーザーへの効果的なアプローチが必要とされていた。",
+  "yamada-bee-farm/": "データ分析の依頼がシステム室に集中し、セグメント情報の抽出・共有に1〜2週間を要していた。データ構造がサイロ化されており、見たい視点で分析ができないケースが多く、担当者交代のたびに設定を一から作り直す必要もあった。",
+  "cdpw2025-yamada-bee-farm": "データベース設計が実務に追いつかず、セグメントや分析データの抽出は毎回フルスクラッチでSQLを作成する必要があった。3,000以上のバッチ処理でシナリオを管理していたため、SQLスキルを持つ担当者でさえカスタマージャーニーの全体像を把握できず、施策の柔軟な調整が困難な状態だった。",
+  "tdcw2025-nobitel": "顧客IDの統合（名寄せ）ができておらず、実質的なユニークユーザー数が把握できず、データの価値を活かしきれていなかった。新規顧客獲得と回数券販売に注力するあまり既存顧客への継続的なフォローが不十分で、マーケティング施策も担当者の経験則に頼っており、データに基づく最適化が全体的に遅れていた。",
+  "tdcw2025-oddspark": "約240万人の会員データを抱える中、顧客情報が部門ごとに異なるシステムへ分散しており、横断的な把握が困難な状況にあった。施策立案のたびに複数システムからデータを収集・加工する必要があり、準備が整う頃にはデータがすでに古くなってしまうという鮮度の問題も深刻だった。",
+  "looop": "2025年の料金プラン改定に際し、顧客ごとに影響額が異なるにもかかわらず、個別対応できるデータ基盤が整っていなかった。電力データを活用した情報の出し分けができる環境になく、一斉配信では解約を促しかねないリスクがあった。",
+  "cdpw2025-mirarth-holdings": "社内では「PoC疲れ」や「KPIのギャップ」が深刻化し、現場が動かない状態に陥っていた。10年以上稼働するレガシーシステムはデータ分析を前提に設計されておらず、顧客データの名寄せが困難で、外部コンサルタントへの依存によって運用コストも膨らんでいた。",
+  "subaru": "ディーラーやアプリ、SNSなど多数のソースからデータを収集していたものの、それらは分断・サイロ化されており、マーケティング戦略は経験則と限られたデータセットに依存していた。各車種の広告データは別々のエージェンシーが管理し、ファーストパーティデータの多くは社内各部門に散在していた。",
+  "greene-king": "2,700以上のパブと複数ブランドにまたがる顧客データが複数のレガシーシステムに分散しており、統合的な顧客把握が困難な状況にあった。ウェブサイトやアプリ、Wi-Fiログインなど豊富なデータを保有していたものの、大規模な分析には数ヶ月を要するという課題を抱えていた。",
+  "six-flags-entertainment": "2024年のSix FlagsとCedar Fairの合併により大規模企業が誕生したものの、顧客データの統合とマーケティング技術の標準化という大きな課題に直面した。既存のCRMやデータ連携の仕組みは時代遅れで、今日の消費者が期待するパーソナライゼーションを提供できていなかった。"
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  /* ── data-url カードを <a> に変換 ── */
+  document.querySelectorAll('.card[data-url]').forEach(function(card) {
+    var url = card.dataset.url;
+    var a = document.createElement('a');
+    a.href = url;
+    a.target = '_blank';
+    a.rel = 'noopener noreferrer';
+    Array.from(card.attributes).forEach(function(attr) { a.setAttribute(attr.name, attr.value); });
+    a.innerHTML = card.innerHTML;
+    card.parentNode.replaceChild(a, card);
+  });
+
+  /* ── data-badgesからcard-metricsと同一スタイルの帯を生成 ── */
+  document.querySelectorAll('.card[data-badges]').forEach(function(card) {
+    var metricsEl = card.querySelector('.card-metrics');
+    var hasMetrics = metricsEl && metricsEl.children.length > 0;
+    if (hasMetrics) return;  // 数字帯があるカードはスキップ
+    var badgesStr = card.dataset.badges;
+    if (!badgesStr) return;
+    var band = document.createElement('div');
+    band.className = 'card-metrics';  // card-metricsと同クラス = 完全同一スタイル
+    badgesStr.split('|').forEach(function(text) {
+      var span = document.createElement('span');
+      span.className = 'metric';  // metricと同クラス = 完全同一スタイル
+      span.textContent = text.trim();
+      band.appendChild(span);
+    });
+    card.insertBefore(band, card.firstChild);
+    if (metricsEl) metricsEl.style.display = 'none';
+  });
+
+  var cards = Array.from(document.querySelectorAll('.card'));
+  var noResults = document.getElementById('no-results');
+  var countEl = document.getElementById('visible-count');
+  var totalEl = document.getElementById('total-count');
+  var searchEl = document.getElementById('search');
+  var summaryEl = document.getElementById('summary');
+  var activeInd = 'all';
+  var activeProds = new Set();
+  if (totalEl) totalEl.textContent = cards.length;
+  if (countEl) countEl.textContent = cards.length;
+
+  var IND_MAP = {it:'IT・テクノロジー',media:'メディア・通信',finance:'金融・保険',retail:'流通・小売',ec:'EC',food:'飲食',consumer:'消費財',fashion:'ファッション',auto:'自動車・モビリティ',transport:'運輸・交通',health:'医療・ヘルスケア',entertain:'エンタメ・スポーツ',energy:'エネルギー',realestate:'不動産'};
+  var PROD_MAP = {cdp:'CDP',engage:'Engage Studio',journey:'Journey',ai_agent:'AI Agent Foundry',cleanroom:'Data Clean Room',audience:'Audience Studio'};
+
+  function hasInd(card, key) {
+    if (key === 'all') return true;
+    return (card.dataset.inds || '').split(' ').includes(key);
+  }
+  function hasProd(card, key) {
+    return (card.dataset.prods || '').split(' ').includes(key);
+  }
+
+  function applyFilter() {
+    var q = searchEl.value.trim().toLowerCase();
+    var visible = 0;
+    cards.forEach(function(card) {
+      var matchInd = hasInd(card, activeInd);
+      var matchProd = activeProds.size === 0 || Array.from(activeProds).every(function(p){ return hasProd(card, p); });
+      var matchSearch = !q || (card.dataset.search||'').toLowerCase().includes(q) || card.innerText.toLowerCase().includes(q);
+      if (matchInd && matchProd && matchSearch) {
+        card.classList.remove('hidden'); visible++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+    countEl.textContent = visible;
+    var parts = [];
+    if (activeInd !== 'all') {
+      var el = document.querySelector('[data-ind="' + activeInd + '"]');
+      parts.push('業種: <span>' + (el ? el.textContent : activeInd) + '</span>');
+    }
+    if (activeProds.size > 0) {
+      var labels = Array.from(activeProds).map(function(p){ var el = document.querySelector('[data-prod="' + p + '"]'); return el ? el.textContent : p; });
+      parts.push('製品: <span>' + labels.join(' ＋ ') + '</span>');
+    }
+    if (q) parts.push('検索: <span>"' + q + '"</span>');
+    summaryEl.innerHTML = parts.length ? '絞り込み中 — ' + parts.join(' / ') + '（' + visible + '件）' : '';
+  }
+
+  document.querySelectorAll('[data-ind]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('[data-ind]').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeInd = btn.dataset.ind;
+      applyFilter();
+    });
+  });
+
+  document.querySelectorAll('[data-prod]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var key = btn.dataset.prod;
+      if (activeProds.has(key)) { activeProds.delete(key); btn.classList.remove('active'); }
+      else { activeProds.add(key); btn.classList.add('active'); }
+      applyFilter();
+    });
+  });
+
+  searchEl.addEventListener('input', applyFilter);
+
+  /* ── サイドパネル ── */
+  var panel = document.getElementById('side-panel');
+  var overlay = document.getElementById('panel-overlay');
+  var closeBtn = document.getElementById('panel-close');
+
+  function openPanel(card) {
+    var slug = card.dataset.slug || '';
+    var url = card.href || card.dataset.url || '';
+    var company = (card.querySelector('.company-name')||{}).textContent || '';
+    company = company.replace(' ↗','').trim();
+    var sub = (card.querySelector('.company-sub')||{}).textContent || '';
+    var metrics = Array.from(card.querySelectorAll('.metric')).map(function(e){ return e.textContent.replace('★ ','').trim(); });
+    var results = Array.from(card.querySelectorAll('.result-tag')).map(function(e){ return e.textContent.replace(/^[✓\s]+/,'').trim(); });
+    var prods = Array.from(card.querySelectorAll('.prod-tag')).map(function(e){ return {cls: e.className.replace('prod-tag ',''), text: e.textContent.trim()}; });
+    var bg = card.dataset.background || ((typeof BACKGROUNDS !== 'undefined' ? BACKGROUNDS[slug] : '') || '');
+
+    document.getElementById('panel-company').textContent = company;
+    document.getElementById('panel-sub').textContent = sub;
+    var panelLink = document.getElementById('panel-link');
+    panelLink.href = url || '#';
+    panelLink.style.display = url ? '' : 'none';
+
+    var bgSection = document.getElementById('panel-bg-section');
+    if (bg) { document.getElementById('panel-bg').textContent = bg; bgSection.style.display = ''; }
+    else { bgSection.style.display = 'none'; }
+
+    var mSection = document.getElementById('panel-metrics-section');
+    var mEl = document.getElementById('panel-metrics');
+    if (metrics.length) { mEl.innerHTML = metrics.map(function(m){ return '<div class="panel-metric-item">' + m + '</div>'; }).join(''); mSection.style.display = ''; }
+    else { mSection.style.display = 'none'; }
+
+    var rSection = document.getElementById('panel-results-section');
+    var rEl = document.getElementById('panel-results');
+    if (results.length) { rEl.innerHTML = results.map(function(r){ return '<div class="panel-result-item">' + r + '</div>'; }).join(''); rSection.style.display = ''; }
+    else { rSection.style.display = 'none'; }
+
+    var pSection = document.getElementById('panel-prods-section');
+    var pEl = document.getElementById('panel-prods');
+    if (prods.length) { pEl.innerHTML = prods.map(function(p){ return '<span class="panel-prod-tag ' + p.cls + '">' + p.text + '</span>'; }).join(''); pSection.style.display = ''; }
+    else { pSection.style.display = 'none'; }
+
+    panel.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePanel() { panel.classList.remove('open'); document.body.style.overflow = ''; }
+  overlay.addEventListener('click', closePanel);
+  closeBtn.addEventListener('click', closePanel);
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closePanel(); });
+
+  document.getElementById('grid').addEventListener('click', function(e) {
+    var card = e.target.closest('.card');
+    if (!card) return;
+    e.preventDefault();
+    openPanel(card);
+  });
+
+  /* ── チャットボット ── */
+  var fab = document.getElementById('chat-fab');
+  var win = document.getElementById('chat-window');
+  var chatClose = document.getElementById('chat-close');
+  var msgs = document.getElementById('chat-messages');
+  var input = document.getElementById('chat-input');
+  var sendBtn = document.getElementById('chat-send');
+  var suggestContainer = document.getElementById('chat-suggestions');
+
+  var IND_LABEL = {it:'IT・テクノロジー',media:'メディア・通信',finance:'金融・保険',retail:'流通・小売',ec:'EC',food:'飲食',consumer:'消費財',fashion:'ファッション',auto:'自動車・モビリティ',transport:'運輸・交通',health:'医療・ヘルスケア',entertain:'エンタメ・スポーツ',energy:'エネルギー',realestate:'不動産'};
+  var PROD_LABEL = {cdp:'CDP',engage:'Engage Studio',journey:'Journey',ai_agent:'AI Agent Foundry',cleanroom:'Data Clean Room',audience:'Audience Studio'};
+
+  var caseData = Array.from(document.querySelectorAll('.card')).map(function(card) {
+    return {
+      company: ((card.querySelector('.company-name')||{}).textContent||'').replace('↗','').trim(),
+      sub:     ((card.querySelector('.company-sub')||{}).textContent||'').trim(),
+      inds:    card.dataset.inds || '',
+      prods:   card.dataset.prods || '',
+      search:  card.dataset.search || '',
+      desc:    ((card.querySelector('.description, p.description')||{}).textContent||'').trim(),
+      metrics: Array.from(card.querySelectorAll('.metric')).map(function(e){ return e.textContent.replace('★ ','').trim(); }),
+      results: Array.from(card.querySelectorAll('.result-tag')).map(function(e){ return e.textContent.replace(/^[✓\s]+/,'').trim(); }),
+      url:     card.href || card.dataset.url || '',
+      slug:    card.dataset.slug || '',
+      bg:      card.dataset.background || ((typeof BACKGROUNDS !== 'undefined' && card.dataset.slug ? BACKGROUNDS[card.dataset.slug] : '') || ''),
+      summary: card.dataset.summary || '',
+      context: card.dataset.context || '',
+      catchcopy: card.dataset.catchcopy || '',
+      badges: (card.dataset.badges || '').split('|').filter(Boolean),
+      featured: card.dataset.featured === 'true',
+    };
+  }).filter(function(c){ return c.company; });
+
+  // 業種・製品・課題の概念辞書。単語が完全一致しない質問にも対応する。
+  var IND_LABEL = {it:'IT・テクノロジー',media:'メディア・通信',finance:'金融・保険',retail:'流通・小売',ec:'EC',food:'飲食',consumer:'消費財',fashion:'ファッション',auto:'自動車・モビリティ',transport:'運輸・交通',health:'医療・ヘルスケア',entertain:'エンタメ・スポーツ',energy:'エネルギー',realestate:'不動産'};
+  var PROD_LABEL = {cdp:'CDP',engage:'Engage Studio',journey:'Journey',ai_agent:'AI Agent Foundry',cleanroom:'Data Clean Room',audience:'Audience Studio'};
+  var IND_ALIAS = {
+    '金融':'finance','金融業':'finance','銀行':'finance','保険':'finance','証券':'finance',
+    'メディア':'media','通信':'media','テレビ':'media','新聞':'media',
+    '製造':'it','メーカー':'consumer','自動車':'auto','モビリティ':'auto','車':'auto',
+    '小売':'retail','流通':'retail','ファッション':'fashion','アパレル':'fashion',
+    'ec':'ec','通販':'consumer','消費財':'consumer','飲食':'food','食品':'food',
+    '医療':'health','ヘルスケア':'health','製薬':'health',
+    'エンタメ':'entertain','スポーツ':'entertain','エンターテイメント':'entertain',
+    'エネルギー':'energy','電力':'energy','不動産':'realestate',
+    '運輸':'transport','交通':'transport','鉄道':'transport',
+    'it':'it','テクノロジー':'it'
+  };
+  var PROD_ALIAS = {
+    'cdp':'cdp','顧客データ基盤':'cdp','データ基盤':'cdp','顧客データ':'cdp',
+    'engage':'engage','engage studio':'engage','エンゲージ':'engage',
+    'journey':'journey','ジャーニー':'journey','カスタマージャーニー':'journey',
+    'ai agent':'ai_agent','aiエージェント':'ai_agent','生成ai':'ai_agent','foundry':'ai_agent',
+    'クリーンルーム':'cleanroom','cleanroom':'cleanroom','データクリーンルーム':'cleanroom',
+    'オーディエンス':'audience','audience studio':'audience'
+  };
+  var CONCEPT_GROUPS = [
+    {label:'データ統合・サイロ解消', terms:['データサイロ','データが分散','顧客データの分散','顧客情報の分散','データ分断','部門ごと','システムが分かれ','バラバラ','分断','名寄せ','顧客id','データ統合','一元化']},
+    {label:'業務工数削減・自動化', terms:['工数削減','時間削減','人手を減ら','省力化','自動化','効率化','業務効率','エンジニアへの依頼','sql','リードタイム','手作業','属人化','人海戦術']},
+    {label:'パーソナライズ・顧客理解', terms:['パーソナライズ','一人ひとり','顧客理解','顧客の解像度','one to one','ワントゥワン','最適なタイミング','顧客体験','レコメンド','セグメント']},
+    {label:'新規顧客獲得・広告改善', terms:['新規顧客','新規獲得','広告効率','広告最適化','roas','cpa','アッパーファネル','リターゲティング','潜在顧客']},
+    {label:'継続購入・ファン化', terms:['ファン化','ロイヤルティ','l​​tv','ltv','リピート','継続購入','解約','離脱','休眠','再購入','f2転換']},
+    {label:'AI活用・内製化', terms:['生成ai','aiエージェント','ai agent','自律','内製化','データ活用の民主化','非エンジニア','自走','経営判断']},
+    {label:'営業・セールス変革', terms:['営業効率','営業活動','訪問準備','商談','インサイドセールス','リード育成','営業支援','情報武装化']}
+  ];
+
+  function normalize(value) {
+    return (value || '').normalize('NFKC').toLowerCase().replace(/[\s　]+/g, '');
+  }
+  function escapeHtml(value) {
+    return String(value || '').replace(/[&<>"']/g, function(ch) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];
+    });
+  }
+  function uniqueValues(values) {
+    return values.filter(function(value, index, arr) { return value && arr.indexOf(value) === index; });
+  }
+  function expandQuery(q) {
+    var normalized = normalize(q);
+    var keys = [];
+    Object.keys(IND_ALIAS).forEach(function(alias) { if (normalized.includes(normalize(alias))) keys.push(IND_ALIAS[alias]); });
+    Object.keys(PROD_ALIAS).forEach(function(alias) { if (normalized.includes(normalize(alias))) keys.push(PROD_ALIAS[alias]); });
+    return { normalized: normalized, keys: uniqueValues(keys) };
+  }
+  function labelForIndustry(inds) {
+    return (inds || '').split(' ').map(function(i) { return IND_LABEL[i] || i; }).filter(Boolean).join(' / ');
+  }
+  function labelForProduct(prods) {
+    return (prods || '').split(' ').map(function(p) { return PROD_LABEL[p] || p; }).filter(Boolean).join(' / ');
+  }
+  function scoreCard(c, q) {
+    var query = expandQuery(q);
+    var text = normalize([
+      c.company, c.sub, c.search, c.desc, c.bg, c.summary, c.context,
+      c.inds, c.prods, c.catchcopy
+    ].concat(c.metrics || []).concat(c.results || []).concat(c.badges || []).join(' '));
+    var score = 0;
+    var reasons = [];
+    var qTokens = q.normalize('NFKC').toLowerCase().split(/[\s、。,．・／/「」『』（）()!?！？]+/).filter(function(t) { return t.length >= 2; });
+
+    query.keys.forEach(function(key) {
+      var hasField = (c.inds || '').split(' ').indexOf(key) >= 0 || (c.prods || '').split(' ').indexOf(key) >= 0;
+      if (hasField) score += 7;
+    });
+    CONCEPT_GROUPS.forEach(function(group) {
+      var qHit = group.terms.some(function(term) { return query.normalized.includes(normalize(term)); });
+      var cHit = group.terms.some(function(term) { return text.includes(normalize(term)); });
+      if (qHit && cHit) { score += 6; reasons.push(group.label); }
+    });
+    qTokens.forEach(function(token) {
+      if (text.includes(normalize(token))) score += token.length >= 4 ? 2 : 1;
+    });
+    if (query.normalized.length >= 3 && text.includes(query.normalized)) score += 10;
+    if (c.company && query.normalized.includes(normalize(c.company))) score += 12;
+    return { score: score, reasons: uniqueValues(reasons) };
+  }
+
+  function buildAnswer(q) {
+    var ql = normalize(q);
+    if (/全部|全件|すべて|一覧|リスト/.test(ql)) return '現在 <strong>' + caseData.length + '件</strong> の事例が登録されています。';
+    var ranked = caseData.map(function(c) {
+      var scored = scoreCard(c, q);
+      return { c: c, s: scored.score, reasons: scored.reasons };
+    }).filter(function(x) { return x.s > 0; }).sort(function(a, b) {
+      return b.s - a.s || (a.c.featured === b.c.featured ? 0 : (a.c.featured ? -1 : 1));
+    }).slice(0, 5);
+    if (!ranked.length) return '「' + escapeHtml(q) + '」に近い事例が見つかりませんでした。<br>「データがバラバラ」「工数を減らしたい」「ファン化」「広告改善」など、課題や目的で試してみてください。';
+
+    var lines = ranked.map(function(item) {
+      var c = item.c;
+      var name = escapeHtml(c.company || c.slug);
+      var sub = c.sub ? '（' + escapeHtml(c.sub) + '）' : '';
+      var why = item.reasons.length ? item.reasons.slice(0, 2).join('・') : '事例本文の課題・成果と質問が一致';
+      var summary = c.summary || c.description || c.background || '';
+      var result = uniqueValues((c.metrics || []).concat(c.results || [])).slice(0, 3).join(' / ');
+      var link = c.url ? '<br><a href="' + escapeHtml(c.url) + '" target="_blank" rel="noopener">詳細を見る ↗</a>' : '<br><span style="color:#9ca3af">公式詳細ページは未確認</span>';
+      return '<strong>' + name + '</strong>' + sub + '<br>関連理由：' + escapeHtml(why) + '<br>📋 ' + escapeHtml(summary.slice(0, 180)) + (result ? '<br>📊 ' + escapeHtml(result) : '') + '<br>🔧 ' + escapeHtml(labelForProduct(c.prods) || '製品情報を確認中') + link;
+    });
+    return ranked.length + '件の関連事例が見つかりました：<br><br>' + lines.join('<br><br>');
+  }
+
+  function addMsg(html, role) {
+    var div = document.createElement('div');
+    div.className = 'msg msg-' + role;
+    div.innerHTML = html;
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    return div;
+  }
+
+  function send(q) {
+    q = q.trim();
+    if (!q) return;
+    input.value = '';
+    sendBtn.disabled = true;
+    suggestContainer.style.display = 'none';
+    addMsg(q, 'user');
+    var thinking = addMsg('<em style="color:#9ca3af">検索中…</em>', 'bot');
+    setTimeout(function() {
+      thinking.innerHTML = buildAnswer(q);
+      msgs.scrollTop = msgs.scrollHeight;
+      sendBtn.disabled = false;
+      input.focus();
+    }, 350);
+  }
+
+  if (fab) {
+    fab.addEventListener('click', function() {
+      win.classList.toggle('open');
+      if (win.classList.contains('open')) { setTimeout(function(){ input.focus(); }, 220); }
+    });
+  }
+  if (chatClose) chatClose.addEventListener('click', function(){ win.classList.remove('open'); });
+  if (sendBtn) sendBtn.addEventListener('click', function(){ send(input.value); });
+  if (input) input.addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.shiftKey){ e.preventDefault(); send(input.value); } });
+  if (suggestContainer) suggestContainer.addEventListener('click', function(e){ if (e.target.classList.contains('chat-suggest-btn')) send(e.target.textContent); });
+
+});
+</script>
+</body>
+</html>
