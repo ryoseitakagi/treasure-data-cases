@@ -63,13 +63,39 @@
     .chip[data-prod="cdp"].active       { background: #3a0ca3; border-color: #3a0ca3; }
     .chip[data-prod="audience"].active  { background: #065f46; border-color: #065f46; }
 
-    /* search */
-    .search-wrap { flex: 1; min-width: 200px; align-self: flex-end; }
+    .chip[data-biz].active { background: #0f766e; border-color: #0f766e; }
+    .chip[data-biz="b2b"].active { background: #1d4ed8; border-color: #1d4ed8; }
+    .chip[data-biz="b2b2c"].active { background: #b45309; border-color: #b45309; }
+    .chip[data-biz="mixed"].active { background: #64748b; border-color: #64748b; }
+
+    /* search and sort */
+    .search-wrap { flex: 1; min-width: 260px; align-self: flex-end; display: flex; gap: 8px; }
     .search-box {
       width: 100%; padding: 8px 14px; border: 1.5px solid #d1d5db; border-radius: 20px;
       font-size: .88rem; outline: none; transition: border-color .2s;
     }
     .search-box:focus { border-color: #3a0ca3; }
+    .sort-select {
+      flex: 0 0 auto; padding: 8px 28px 8px 12px;
+      border: 1.5px solid #d1d5db; border-radius: 20px; background: white;
+      color: #374151; font-size: .78rem; outline: none; cursor: pointer;
+    }
+    .sort-select:focus { border-color: #3a0ca3; }
+
+    .case-meta {
+      margin-top: 4px; font-size: .68rem; color: #94a3b8;
+      line-height: 1.4; letter-spacing: .01em;
+    }
+    .biz-badge {
+      display: inline-block; margin-top: 4px; padding: 2px 7px;
+      border-radius: 99px; background: #ecfeff; color: #0f766e;
+      font-size: .65rem; font-weight: 700;
+    }
+    @media (max-width: 640px) {
+      .search-wrap { min-width: 100%; flex-wrap: wrap; }
+      .search-box { flex: 1 1 100%; }
+      .sort-select { flex: 1; }
+    }
 
     /* active-filter summary */
     .active-summary {
@@ -469,9 +495,26 @@
     </div>
   </div>
 
-  <!-- 検索 -->
+  <!-- 企業形態フィルター -->
+  <div class="filter-group">
+    <div class="filter-group-label">企業形態</div>
+    <div class="filter-row" id="biz-row">
+      <span class="chip active" data-biz="all">すべて</span>
+      <span class="chip" data-biz="b2c">BtoC</span>
+      <span class="chip" data-biz="b2b">BtoB</span>
+      <span class="chip" data-biz="b2b2c">BtoBtoC</span>
+      <span class="chip" data-biz="mixed">複合・その他</span>
+    </div>
+  </div>
+
+  <!-- 検索・並び順 -->
   <div class="search-wrap">
-    <input class="search-box" id="search" type="text" placeholder="会社名・キーワードで検索...">
+    <input class="search-box" id="search" type="text" placeholder="会社名・課題・成果・製品で検索...">
+    <select class="sort-select" id="sort-select" aria-label="事例の並び順">
+      <option value="updated-desc">更新日が新しい順</option>
+      <option value="updated-asc">更新日が古い順</option>
+      <option value="company-asc">会社名順</option>
+    </select>
   </div>
 
 </div>
@@ -651,35 +694,128 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   var cards = Array.from(document.querySelectorAll('.card'));
+  var grid = document.getElementById('grid');
   var noResults = document.getElementById('no-results');
   var countEl = document.getElementById('visible-count');
   var totalEl = document.getElementById('total-count');
   var searchEl = document.getElementById('search');
+  var sortEl = document.getElementById('sort-select');
   var summaryEl = document.getElementById('summary');
   var activeInd = 'all';
+  var activeBiz = 'all';
   var activeProds = new Set();
   if (totalEl) totalEl.textContent = cards.length;
   if (countEl) countEl.textContent = cards.length;
 
   var IND_MAP = {it:'IT・テクノロジー',media:'メディア・通信',finance:'金融・保険',retail:'流通・小売',ec:'EC',food:'飲食',consumer:'消費財',fashion:'ファッション',auto:'自動車・モビリティ',transport:'運輸・交通',health:'医療・ヘルスケア',entertain:'エンタメ・スポーツ',energy:'エネルギー',realestate:'不動産'};
   var PROD_MAP = {cdp:'CDP',engage:'Engage Studio',journey:'Journey',ai_agent:'AI Agent Foundry',cleanroom:'Data Clean Room',audience:'Audience Studio'};
+  var BIZ_MAP = {b2c:'BtoC',b2b:'BtoB',b2b2c:'BtoBtoC',mixed:'複合・その他'};
+
+  function normalizeSearch(value) {
+    return (value || '').normalize('NFKC').toLowerCase().replace(/[\s　、。．・,，/／\\|｜:：;；「」『』（）()!?！？【】［］]+/g, '');
+  }
+  function companySearchKey(value) {
+    return normalizeSearch(value).replace(/株式会社|有限会社|合同会社|（株）|\(株\)|co\.?ltd\.?|inc\.?/g, '');
+  }
+  var SEARCH_ALIASES = [
+    {keys:['btoc','b2c'], terms:['b2c','btoc','消費者','個人向け','会員','ec','通販','小売','店舗']},
+    {keys:['btobtoc','b2b2c'], terms:['b2b2c','btobtoc','b2bto c','b2bto c','法人経由','ディーラー','小売店']},
+    {keys:['btob','b2b'], terms:['b2b','btob','法人','企業向け','法人営業','業務用','sfa']},
+    {keys:['dwh','データウェアハウス'], terms:['dwh','データウェアハウス','データ基盤','分析基盤']},
+    {keys:['維持費','保守費','運用コスト'], terms:['維持費','保守費','運用コスト','保守','ランニングコスト','コスト削減']},
+    {keys:['クラウド刷新','クラウド移行','dwh移行'], terms:['クラウド','クラウド刷新','クラウド移行','移行','刷新','レガシー']},
+    {keys:['工数削減','効率化'], terms:['工数削減','時間削減','効率化','自動化','省力化','リードタイム']}
+  ];
+  var SEARCH_DICTIONARY = ['btobtoc','b2b2c','btoc','btob','dwh','データウェアハウス','データ基盤','分析基盤','維持費','保守費','運用コスト','クラウド刷新','クラウド移行','コスト削減','レガシー','工数削減','効率化','データ統合','データサイロ','顧客データ','解約率','広告効率','roas','cpa','aiエージェント','engage studio','audience studio'];
+  function uniqueStrings(values) {
+    return values.filter(function(value, index, arr) { return value && arr.indexOf(value) === index; });
+  }
+  function searchTerms(raw) {
+    var qn = normalizeSearch(raw);
+    var terms = qn.split(/[^a-z0-9一-龠ぁ-んァ-ヶー]+/i).filter(function(t){ return t.length >= 2; });
+    SEARCH_DICTIONARY.forEach(function(term) {
+      var tn = normalizeSearch(term);
+      if (qn.includes(tn)) terms.push(tn);
+    });
+    return uniqueStrings(terms).sort(function(a,b){ return b.length - a.length; }).filter(function(term, index, arr) {
+      return !arr.some(function(other, i) { return i < index && other.includes(term); });
+    });
+  }
+  function expandedSearchTerms(raw) {
+    var qn = normalizeSearch(raw);
+    var terms = searchTerms(raw);
+    SEARCH_ALIASES.forEach(function(group) {
+      if (group.keys.some(function(key){ return qn.includes(normalizeSearch(key)); })) {
+        terms = terms.concat(group.terms.map(normalizeSearch));
+      }
+    });
+    return uniqueStrings(terms);
+  }
+  function searchScore(card, raw) {
+    var qn = normalizeSearch(raw);
+    if (!qn) return 1;
+    var company = companySearchKey(card.querySelector('.company-name') ? card.querySelector('.company-name').textContent : '');
+    var text = normalizeSearch([
+      card.dataset.search, card.dataset.context, card.dataset.summary, card.dataset.background,
+      card.dataset.catchcopy, card.dataset.inds, card.dataset.prods, card.dataset.biz,
+      card.innerText
+    ].join(' '));
+    var score = 0;
+    if (company && (company.includes(qn) || qn.includes(company))) score += 100;
+    if (qn.length >= 3 && text.includes(qn)) score += 35;
+    var terms = expandedSearchTerms(raw);
+    var matched = 0;
+    terms.forEach(function(term) {
+      if (term.length < 2) return;
+      if (text.includes(term)) { matched++; score += term.length >= 4 ? 6 : 3; }
+    });
+    if (terms.length > 1 && matched === terms.length) score += 14;
+    return score;
+  }
 
   function hasInd(card, key) {
     if (key === 'all') return true;
     return (card.dataset.inds || '').split(' ').includes(key);
   }
+  function hasBiz(card, key) {
+    if (key === 'all') return true;
+    return (card.dataset.biz || '').split(' ').includes(key);
+  }
   function hasProd(card, key) {
     return (card.dataset.prods || '').split(' ').includes(key);
   }
+  function dateValue(card) {
+    var value = card.dataset.updated || '';
+    var time = value ? Date.parse(value) : NaN;
+    return Number.isNaN(time) ? null : time;
+  }
+  function sortCards() {
+    var mode = sortEl ? sortEl.value : 'updated-desc';
+    var sorted = cards.slice();
+    if (mode === 'company-asc') {
+      sorted.sort(function(a,b){ return companySearchKey(a.innerText).localeCompare(companySearchKey(b.innerText), 'ja'); });
+    } else if (mode === 'updated-desc' || mode === 'updated-asc') {
+      sorted.sort(function(a,b) {
+        var ad = dateValue(a), bd = dateValue(b);
+        if (ad === null && bd === null) return 0;
+        if (ad === null) return 1;
+        if (bd === null) return -1;
+        return mode === 'updated-desc' ? bd - ad : ad - bd;
+      });
+    }
+    sorted.forEach(function(card){ grid.insertBefore(card, noResults); });
+  }
 
   function applyFilter() {
-    var q = searchEl.value.trim().toLowerCase();
+    var q = searchEl.value.trim();
+    sortCards();
     var visible = 0;
     cards.forEach(function(card) {
       var matchInd = hasInd(card, activeInd);
+      var matchBiz = hasBiz(card, activeBiz);
       var matchProd = activeProds.size === 0 || Array.from(activeProds).every(function(p){ return hasProd(card, p); });
-      var matchSearch = !q || (card.dataset.search||'').toLowerCase().includes(q) || card.innerText.toLowerCase().includes(q);
-      if (matchInd && matchProd && matchSearch) {
+      var matchSearch = !q || searchScore(card, q) >= 3;
+      if (matchInd && matchBiz && matchProd && matchSearch) {
         card.classList.remove('hidden'); visible++;
       } else {
         card.classList.add('hidden');
@@ -689,27 +825,41 @@ document.addEventListener("DOMContentLoaded", function() {
     countEl.textContent = visible;
     var parts = [];
     if (activeInd !== 'all') {
-      var el = document.querySelector('[data-ind="' + activeInd + '"]');
-      parts.push('業種: <span>' + (el ? el.textContent : activeInd) + '</span>');
+      var indEl = document.querySelector('#ind-row [data-ind="' + activeInd + '"]');
+      parts.push('業種: <span>' + (indEl ? indEl.textContent : activeInd) + '</span>');
+    }
+    if (activeBiz !== 'all') {
+      var bizEl = document.querySelector('#biz-row [data-biz="' + activeBiz + '"]');
+      parts.push('企業形態: <span>' + (bizEl ? bizEl.textContent : (BIZ_MAP[activeBiz] || activeBiz)) + '</span>');
     }
     if (activeProds.size > 0) {
-      var labels = Array.from(activeProds).map(function(p){ var el = document.querySelector('[data-prod="' + p + '"]'); return el ? el.textContent : p; });
+      var labels = Array.from(activeProds).map(function(p){ var el = document.querySelector('#prod-row [data-prod="' + p + '"]'); return el ? el.textContent : p; });
       parts.push('製品: <span>' + labels.join(' ＋ ') + '</span>');
     }
-    if (q) parts.push('検索: <span>"' + q + '"</span>');
+    if (q) parts.push('検索: <span>"' + q.replace(/[<>]/g, '') + '"</span>');
+    if (sortEl && sortEl.value !== 'recommended') parts.push('並び順: <span>' + sortEl.options[sortEl.selectedIndex].text + '</span>');
     summaryEl.innerHTML = parts.length ? '絞り込み中 — ' + parts.join(' / ') + '（' + visible + '件）' : '';
   }
 
-  document.querySelectorAll('[data-ind]').forEach(function(btn) {
+  document.querySelectorAll('#ind-row [data-ind]').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      document.querySelectorAll('[data-ind]').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('#ind-row [data-ind]').forEach(function(b){ b.classList.remove('active'); });
       btn.classList.add('active');
       activeInd = btn.dataset.ind;
       applyFilter();
     });
   });
 
-  document.querySelectorAll('[data-prod]').forEach(function(btn) {
+  document.querySelectorAll('#biz-row [data-biz]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('#biz-row [data-biz]').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeBiz = btn.dataset.biz;
+      applyFilter();
+    });
+  });
+
+  document.querySelectorAll('#prod-row [data-prod]').forEach(function(btn) {
     btn.addEventListener('click', function() {
       var key = btn.dataset.prod;
       if (activeProds.has(key)) { activeProds.delete(key); btn.classList.remove('active'); }
@@ -719,6 +869,8 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   searchEl.addEventListener('input', applyFilter);
+  if (sortEl) sortEl.addEventListener('change', applyFilter);
+  applyFilter();
 
   /* ── サイドパネル ── */
   var panel = document.getElementById('side-panel');
@@ -789,6 +941,7 @@ document.addEventListener("DOMContentLoaded", function() {
   var TOSUP_PATTERNS = __TOSUP_PATTERNS__;
   var IND_LABEL = {it:'IT・テクノロジー',media:'メディア・通信',finance:'金融・保険',retail:'流通・小売',ec:'EC',food:'飲食',consumer:'消費財',fashion:'ファッション',auto:'自動車・モビリティ',transport:'運輸・交通',health:'医療・ヘルスケア',entertain:'エンタメ・スポーツ',energy:'エネルギー',realestate:'不動産'};
   var PROD_LABEL = {cdp:'CDP',engage:'Engage Studio',journey:'Journey',ai_agent:'AI Agent Foundry',cleanroom:'Data Clean Room',audience:'Audience Studio'};
+  var BIZ_MAP = {b2c:'BtoC',b2b:'BtoB',b2b2c:'BtoBtoC',mixed:'複合・その他'};
 
   var caseData = Array.from(document.querySelectorAll('.card')).map(function(card) {
     return {
@@ -807,6 +960,8 @@ document.addEventListener("DOMContentLoaded", function() {
       context: card.dataset.context || '',
       catchcopy: card.dataset.catchcopy || '',
       badges: (card.dataset.badges || '').split('|').filter(Boolean),
+      biz:     card.dataset.biz || '',
+      updated: card.dataset.updated || '',
       featured: card.dataset.featured === 'true',
     };
   }).filter(function(c){ return c.company; });
@@ -872,16 +1027,29 @@ document.addEventListener("DOMContentLoaded", function() {
     var query = expandQuery(q);
     var text = normalize([
       c.company, c.sub, c.search, c.desc, c.bg, c.summary, c.context,
-      c.inds, c.prods, c.catchcopy
+      c.inds, c.prods, c.biz, c.catchcopy, c.updated
     ].concat(c.metrics || []).concat(c.results || []).concat(c.badges || []).join(' '));
     var score = 0;
     var reasons = [];
+    var company = normalize(c.company).replace(/株式会社|有限会社|合同会社|（株）|\(株\)|co\.?ltd\.?|inc\.?/g, '');
+    var qn = normalize(q);
     var qTokens = q.normalize('NFKC').toLowerCase().split(/[\s、。,．・／/「」『』（）()!?！？]+/).filter(function(t) { return t.length >= 2; });
 
     query.keys.forEach(function(key) {
-      var hasField = (c.inds || '').split(' ').indexOf(key) >= 0 || (c.prods || '').split(' ').indexOf(key) >= 0;
-      if (hasField) score += 7;
+      var hasField = (c.inds || '').split(' ').indexOf(key) >= 0 || (c.prods || '').split(' ').indexOf(key) >= 0 || (c.biz || '').split(' ').indexOf(key) >= 0;
+      if (hasField) score += 8;
     });
+    if (company && (company.includes(qn) || qn.includes(company))) score += 30;
+    if (qn.length >= 3 && text.includes(qn)) score += 12;
+    var preciseTerms = expandedSearchTerms(q);
+    var matchedTerms = 0;
+    preciseTerms.forEach(function(term) {
+      if (term.length >= 2 && text.includes(normalize(term))) {
+        matchedTerms++;
+        score += term.length >= 4 ? 4 : 2;
+      }
+    });
+    if (preciseTerms.length > 1 && matchedTerms === preciseTerms.length) score += 10;
     CONCEPT_GROUPS.forEach(function(group) {
       var qHit = group.terms.some(function(term) { return query.normalized.includes(normalize(term)); });
       var cHit = group.terms.some(function(term) { return text.includes(normalize(term)); });
@@ -890,8 +1058,38 @@ document.addEventListener("DOMContentLoaded", function() {
     qTokens.forEach(function(token) {
       if (text.includes(normalize(token))) score += token.length >= 4 ? 2 : 1;
     });
-    if (query.normalized.length >= 3 && text.includes(query.normalized)) score += 10;
-    if (c.company && query.normalized.includes(normalize(c.company))) score += 12;
+    return { score: score, reasons: uniqueValues(reasons) };
+  }
+
+  function scoreCard(c, q) {
+    var query = expandQuery(q);
+    var text = normalize([
+      c.company, c.sub, c.search, c.desc, c.bg, c.summary, c.context,
+      c.inds, c.prods, c.biz, c.catchcopy, c.updated
+    ].concat(c.metrics || []).concat(c.results || []).concat(c.badges || []).join(' '));
+    var score = 0;
+    var reasons = [];
+    var company = normalize(c.company).replace(/株式会社|有限会社|合同会社|（株）|\(株\)|co\.?ltd\.?|inc\.?/g, '');
+    var qn = normalize(q);
+    var qTokens = q.normalize('NFKC').toLowerCase().split(/[\s、。,．・／/「」『』（）()!?！？]+/).filter(function(t) { return t.length >= 2; });
+    query.keys.forEach(function(key) {
+      var hasField = (c.inds || '').split(' ').indexOf(key) >= 0 || (c.prods || '').split(' ').indexOf(key) >= 0 || (c.biz || '').split(' ').indexOf(key) >= 0;
+      if (hasField) score += 8;
+    });
+    if (company && (company.includes(qn) || qn.includes(company))) score += 30;
+    if (qn.length >= 3 && text.includes(qn)) score += 12;
+    var preciseTerms = expandedSearchTerms(q);
+    var matchedTerms = 0;
+    preciseTerms.forEach(function(term) {
+      if (term.length >= 2 && text.includes(normalize(term))) { matchedTerms++; score += term.length >= 4 ? 4 : 2; }
+    });
+    if (preciseTerms.length > 1 && matchedTerms === preciseTerms.length) score += 10;
+    CONCEPT_GROUPS.forEach(function(group) {
+      var qHit = group.terms.some(function(term) { return query.normalized.includes(normalize(term)); });
+      var cHit = group.terms.some(function(term) { return text.includes(normalize(term)); });
+      if (qHit && cHit) { score += 6; reasons.push(group.label); }
+    });
+    qTokens.forEach(function(token) { if (text.includes(normalize(token))) score += token.length >= 4 ? 2 : 1; });
     return { score: score, reasons: uniqueValues(reasons) };
   }
 
@@ -956,7 +1154,8 @@ document.addEventListener("DOMContentLoaded", function() {
       var summary = c.summary || c.description || c.background || '';
       var result = uniqueValues((c.metrics || []).concat(c.results || [])).slice(0, 3).join(' / ');
       var link = c.url ? '<br><a href="' + escapeHtml(c.url) + '" target="_blank" rel="noopener">詳細を見る ↗</a>' : '<br><span style="color:#9ca3af">公式詳細ページは未確認</span>';
-      return '<strong>' + name + '</strong>' + sub + '<br>関連理由：' + escapeHtml(why) + '<br>📋 ' + escapeHtml(summary.slice(0, 180)) + (result ? '<br>📊 ' + escapeHtml(result) : '') + '<br>🔧 ' + escapeHtml(labelForProduct(c.prods) || '製品情報を確認中') + link;
+      var biz = (c.biz || '').split(' ').map(function(key) { return BIZ_MAP[key] || key; }).filter(Boolean).join(' / ');
+      return '<strong>' + name + '</strong>' + sub + '<br>関連理由：' + escapeHtml(why) + '<br>📋 ' + escapeHtml(summary.slice(0, 180)) + (result ? '<br>📊 ' + escapeHtml(result) : '') + '<br>🔧 ' + escapeHtml(labelForProduct(c.prods) || '製品情報を確認中') + (biz ? '<br>🏷 ' + escapeHtml(biz) : '') + '<br>🗓 更新: ' + escapeHtml(c.updated ? c.updated.slice(0, 10) : '更新日未確認') + link;
     });
     return header + ranked.length + '件の関連事例が見つかりました：<br><br>' + lines.join('<br><br>');
   }
