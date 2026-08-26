@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE = ROOT / "template.html"
 CASES = ROOT / "data" / "cases.json"
+TOSUP = ROOT / "data" / "tosup_patterns.json"
 OUTPUT = ROOT / "index.html"
 
 IND_LABEL = {
@@ -21,6 +22,9 @@ IND_LABEL = {
 PROD_LABEL = {
     "cdp": "CDP", "engage": "Engage Studio", "journey": "Journey",
     "ai_agent": "AI Agent Foundry", "cleanroom": "Data Clean Room", "audience": "Audience Studio",
+}
+BIZ_LABEL = {
+    "b2c": "BtoC", "b2b": "BtoB", "b2b2c": "BtoBtoC", "mixed": "複合・その他",
 }
 IND_CLASS = set(IND_LABEL)
 
@@ -43,6 +47,39 @@ def compact(value: str, limit: int = 38) -> str:
     if len(value) <= limit:
         return value
     return value[: limit - 1] + "…"
+
+
+def infer_business_types(case: dict) -> list[str]:
+    explicit = case.get("business_types") or case.get("businessTypes") or []
+    if isinstance(explicit, str):
+        explicit = explicit.split()
+    types = [item for item in explicit if item in BIZ_LABEL]
+    text = " ".join(str(case.get(key, "")) for key in [
+        "company", "title", "sub", "description", "background", "summary", "search", "context"
+    ])
+    normalized = text.lower().replace(" ", "")
+    has_b2b2c = any(term in normalized for term in ["btobtoc", "b2b2c", "法人経由", "ディーラー経由", "小売店が顧客接点"])
+    has_b2b = any(term in normalized for term in ["btob", "b2b", "法人向け", "企業向け", "法人営業", "業務用", "sfa", "商談", "インサイドセールス"])
+    has_b2c = any(term in normalized for term in ["btoc", "b2c", "消費者", "個人向け", "会員", "ec", "通販", "店舗", "来店", "購買"])
+    if has_b2b2c:
+        types.append("b2b2c")
+    elif has_b2b and has_b2c:
+        types.append("mixed")
+    elif has_b2b:
+        types.append("b2b")
+    elif has_b2c:
+        types.append("b2c")
+    if not types:
+        types.append("mixed")
+    return unique(types)
+
+
+def updated_date(case: dict) -> str:
+    for key in ["updatedAt", "updated_at", "sourceLastmod", "lastmod"]:
+        value = str(case.get(key) or "").strip()
+        if value:
+            return value[:10]
+    return ""
 
 
 def first_sentence(value: str) -> str:
@@ -72,6 +109,8 @@ def render_card(case: dict) -> str:
     sub = case.get("sub") or case.get("title", "")
     industries = [x for x in case.get("industries", []) if x]
     products = [x for x in case.get("products", []) if x]
+    business_types = infer_business_types(case)
+    updated = updated_date(case)
     ind_label = " / ".join(IND_LABEL.get(x, x) for x in industries) or "未分類"
     ind_class = next((x for x in industries if x in IND_CLASS), "other")
     description = case.get("description") or case.get("summary") or case.get("background") or "公式ページから事例内容を取得中です。"
@@ -79,11 +118,12 @@ def render_card(case: dict) -> str:
     badges = badge_items(case)
     context = case.get("context") or " ".join([
         company, sub, case.get("search", ""), case.get("background", ""), case.get("summary", ""),
-        " ".join(results), " ".join(products),
+        " ".join(results), " ".join(products), " ".join(BIZ_LABEL.get(x, x) for x in business_types),
     ])
     attrs = {
         "data-inds": " ".join(industries),
         "data-prods": " ".join(products),
+        "data-biz": " ".join(business_types),
         "data-search": case.get("search", "")[:12000],
         "data-slug": slug,
         "data-summary": case.get("summary", ""),
@@ -91,9 +131,15 @@ def render_card(case: dict) -> str:
         "data-context": context[:16000],
         "data-badges": "|".join(badges),
         "data-catchcopy": case.get("catchcopy", ""),
+        "data-updated": updated,
         "data-status": case.get("status", "active"),
         "data-featured": "true" if case.get("featured") else "false",
     }
+    meta_parts = []
+    if updated:
+        meta_parts.append(f"更新 {updated}")
+    meta_parts.append(" / ".join(BIZ_LABEL.get(x, x) for x in business_types))
+    meta_html = f'<div class="case-meta">{" · ".join(meta_parts)}</div>'
     if url:
         attrs["data-url"] = url
     tag = "a" if url else "div"
@@ -118,6 +164,7 @@ def render_card(case: dict) -> str:
       <div>
         <div class="company-name">{esc(company)}</div>
         <div class="company-sub">{esc(sub)}</div>
+        {meta_html}
         {unlinked}
       </div>
       <span class="ind-badge ind-{esc(ind_class)}">{esc(ind_label)}</span>
@@ -144,12 +191,18 @@ def main() -> None:
     template = TEMPLATE.read_text(encoding="utf-8")
     cases = json.loads(CASES.read_text(encoding="utf-8"))
     cases = [case for case in cases if case.get("status") != "retired"]
+    tosup_payload = json.loads(TOSUP.read_text(encoding="utf-8"))
+    tosup_patterns = tosup_payload.get("seed_patterns", []) + tosup_payload.get("generated_patterns", [])
     cases_html = "\n\n".join(render_card(case) for case in cases)
     start_marker = "  <!-- CASES_START -->"
     end_marker = "  <!-- CASES_END -->"
     start = template.index(start_marker) + len(start_marker)
     end = template.index(end_marker, start)
     output = template[:start] + "\n" + cases_html + "\n  " + template[end:]
+    marker = "__TOSUP_PATTERNS__"
+    if marker not in output:
+        raise RuntimeError("TOSUP pattern placeholder is missing from template.html")
+    output = output.replace(marker, json.dumps(tosup_patterns, ensure_ascii=False, separators=(",", ":")), 1)
 
     industries = {item for case in cases for item in case.get("industries", []) if item}
     products = {item for case in cases for item in case.get("products", []) if item}
