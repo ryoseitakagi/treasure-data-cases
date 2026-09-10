@@ -40,7 +40,7 @@ jobs:
           python scripts/sync_cases.py
           python scripts/build_site.py
 
-           - name: Commit changed case data
+      - name: Commit changed case data
         run: |
           git add data/cases.json data/tosup_patterns.json index.html
           if git diff --cached --quiet; then
