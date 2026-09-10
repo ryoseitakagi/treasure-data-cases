@@ -191,12 +191,28 @@ def extract_page(item: dict[str, str], old: dict[str, Any] | None, override: dic
 
 
 def keep_legacy(record: dict[str, Any]) -> dict[str, Any]:
-    """Keep curated global/unlinked records until the source exposes a URL."""
+    """Keep curated global/unlinked records without carrying oversized legacy text."""
     record = dict(record)
     record.setdefault("context", " ".join(unique([
         record.get("company", ""), record.get("search", ""), record.get("background", ""),
         record.get("summary", ""), " ".join(record.get("results", [])),
     ])))
+    # Older uploads can contain an entire HTML document in a legacy context.
+    # Keep the searchable part, but never let one record inflate the catalog.
+    limits = {
+        "context": MAX_CONTEXT,
+        "search": 12000,
+        "description": 4000,
+        "background": 6000,
+        "summary": 4000,
+        "catchcopy": 1000,
+    }
+    for key, limit in limits.items():
+        if isinstance(record.get(key), str):
+            record[key] = record[key][:limit]
+    for key in ["results", "metrics", "badges"]:
+        if isinstance(record.get(key), list):
+            record[key] = [str(item)[:1000] for item in record[key][:8]]
     record.setdefault("status", "unlinked" if not record.get("url") else "legacy")
     record.setdefault("source", "curated legacy")
     record.setdefault("lastCheckedAt", datetime.now(timezone.utc).isoformat())
@@ -248,9 +264,13 @@ def main() -> None:
         for line in failures[:10]: print(" ", line, file=sys.stderr)
 
     ordered = sorted(records.values(), key=lambda x: (not x.get("featured", False), x.get("company", ""), x.get("slug", "")))
+    payload = json.dumps(ordered, ensure_ascii=False, indent=2) + "\n"
+    payload_size = len(payload.encode("utf-8"))
+    if payload_size > 20 * 1024 * 1024:
+        raise RuntimeError(f"Generated data/cases.json is too large: {payload_size / 1024 / 1024:.1f} MB")
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    CASES_FILE.write_text(json.dumps(ordered, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"wrote case records: {len(ordered)}")
+    CASES_FILE.write_text(payload, encoding="utf-8")
+    print(f"wrote case records: {len(ordered)} ({payload_size / 1024 / 1024:.1f} MB)")
     print(f"active: {sum(x.get('status') == 'active' for x in ordered)}; unlinked/legacy: {sum(x.get('status') != 'active' for x in ordered)}")
 
 
