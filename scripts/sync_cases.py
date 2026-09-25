@@ -28,8 +28,39 @@ OVERRIDES_FILE = DATA_DIR / "overrides.json"
 SITEMAP_URL = "https://www.treasure.ai/sitemap.xml"
 SITE_ROOT = "https://www.treasure.ai"
 UA = "TreasureCasesSync/1.0 (+https://ryoseitakagi.github.io/treasure-data-cases/)"
-MAX_CONTEXT = 16000
+MAX_CONTEXT = 12000
 MAX_WORKERS = 4
+MAX_OUTPUT_BYTES = 80 * 1024 * 1024
+OUTPUT_FIELDS = (
+    "slug", "url", "company", "sub", "title", "industries", "products", "search",
+    "description", "background", "summary", "catchcopy", "badges", "metrics", "results",
+    "context", "source", "sourceLastmod", "sourceHash", "lastCheckedAt", "featured", "status",
+)
+STRING_LIMITS = {
+    "url": 1000, "slug": 300, "company": 300, "sub": 1000, "title": 1000,
+    "search": 9000, "description": 4000, "background": 6000, "summary": 4000,
+    "catchcopy": 1200, "context": MAX_CONTEXT, "source": 200, "sourceLastmod": 80,
+    "sourceHash": 100, "lastCheckedAt": 80,
+}
+LIST_LIMITS = {"industries": 8, "products": 8, "badges": 8, "metrics": 8, "results": 8}
+LIST_ITEM_LIMIT = 1200
+
+
+def compact_record(record: dict[str, Any]) -> dict[str, Any]:
+    """Keep only fields consumed by the site and cap legacy text sizes."""
+    compacted: dict[str, Any] = {}
+    for key in OUTPUT_FIELDS:
+        if key not in record:
+            continue
+        value = record[key]
+        if isinstance(value, str):
+            compacted[key] = value[:STRING_LIMITS.get(key, 2000)]
+        elif isinstance(value, list):
+            compacted[key] = [str(item)[:LIST_ITEM_LIMIT] for item in value[:LIST_LIMITS.get(key, 8)]]
+        else:
+            compacted[key] = value
+    return compacted
+
 
 # A page that disappeared from both the current Japanese sitemap and the old
 # public domain is not useful as a detail link. It is omitted instead of
@@ -264,10 +295,14 @@ def main() -> None:
         for line in failures[:10]: print(" ", line, file=sys.stderr)
 
     ordered = sorted(records.values(), key=lambda x: (not x.get("featured", False), x.get("company", ""), x.get("slug", "")))
-    payload = json.dumps(ordered, ensure_ascii=False, indent=2) + "\n"
+    ordered = [compact_record(record) for record in ordered]
+    # This is machine-readable catalog data; compact JSON prevents formatting
+    # whitespace from inflating the GitHub-hosted file.
+    payload = json.dumps(ordered, ensure_ascii=False, separators=(",", ":")) + "\n"
     payload_size = len(payload.encode("utf-8"))
-    if payload_size > 20 * 1024 * 1024:
+    if payload_size > MAX_OUTPUT_BYTES:
         raise RuntimeError(f"Generated data/cases.json is too large: {payload_size / 1024 / 1024:.1f} MB")
+#
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     CASES_FILE.write_text(payload, encoding="utf-8")
     print(f"wrote case records: {len(ordered)} ({payload_size / 1024 / 1024:.1f} MB)")
