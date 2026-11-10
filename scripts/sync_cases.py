@@ -29,7 +29,9 @@ SITEMAP_URL = "https://www.treasure.ai/sitemap.xml"
 SITE_ROOT = "https://www.treasure.ai"
 UA = "TreasureCasesSync/1.0 (+https://ryoseitakagi.github.io/treasure-data-cases/)"
 MAX_CONTEXT = 12000
-MAX_WORKERS = 4
+MAX_WORKERS = 2
+FETCH_ATTEMPTS = 3
+FETCH_BACKOFF_SECONDS = 3
 MAX_OUTPUT_BYTES = 80 * 1024 * 1024
 OUTPUT_FIELDS = (
     "slug", "url", "company", "sub", "title", "industries", "products", "search",
@@ -46,17 +48,29 @@ LIST_LIMITS = {"industries": 8, "products": 8, "badges": 8, "metrics": 8, "resul
 LIST_ITEM_LIMIT = 1200
 
 
+def looks_mojibake(value: object) -> bool:
+    text = str(value or "")
+    return any(marker in text for marker in ("ã", "ä", "å", "Â", "�", "1⁄4"))
+
+
 def compact_record(record: dict[str, Any]) -> dict[str, Any]:
-    """Keep only fields consumed by the site and cap legacy text sizes."""
+    """Keep site fields, cap legacy text sizes, and drop corrupted text."""
     compacted: dict[str, Any] = {}
     for key in OUTPUT_FIELDS:
         if key not in record:
             continue
         value = record[key]
         if isinstance(value, str):
-            compacted[key] = value[:STRING_LIMITS.get(key, 2000)]
+            if looks_mojibake(value):
+                compacted[key] = record.get("slug", "") if key == "company" else ""
+            else:
+                compacted[key] = value[:STRING_LIMITS.get(key, 2000)]
         elif isinstance(value, list):
-            compacted[key] = [str(item)[:LIST_ITEM_LIMIT] for item in value[:LIST_LIMITS.get(key, 8)]]
+            compacted[key] = [
+                str(item)[:LIST_ITEM_LIMIT]
+                for item in value[:LIST_LIMITS.get(key, 8)]
+                if not looks_mojibake(item)
+            ]
         else:
             compacted[key] = value
     return compacted
@@ -97,9 +111,27 @@ def load_json(path: Path, fallback: Any) -> Any:
 
 
 def fetch(url: str, timeout: int = 40) -> requests.Response:
-    response = session.get(url, timeout=timeout, verify=certifi.where())
-    response.raise_for_status()
-    return response
+    last_error: Exception | None = None
+    for attempt in range(FETCH_ATTEMPTS):
+        try:
+            response = session.get(url, timeout=timeout, verify=certifi.where())
+            if (response.status_code == 429 or response.status_code >= 500) and attempt < FETCH_ATTEMPTS - 1:
+                retry_after = response.headers.get("Retry-After", "")
+                try:
+                    wait = max(FETCH_BACKOFF_SECONDS, min(int(retry_after), 30))
+                except ValueError:
+                    wait = FETCH_BACKOFF_SECONDS * (attempt + 1)
+                time.sleep(wait)
+                continue
+            response.raise_for_status()
+            return response
+        except requests.RequestException as exc:
+            last_error = exc
+            if attempt < FETCH_ATTEMPTS - 1:
+                time.sleep(FETCH_BACKOFF_SECONDS * (attempt + 1))
+            else:
+                raise
+    raise RuntimeError(f"Could not fetch {url}: {last_error}")
 
 
 def discover_urls() -> list[dict[str, str]]:
@@ -133,7 +165,8 @@ def text_nodes(node: html.HtmlElement, xpath: str) -> list[str]:
 def extract_page(item: dict[str, str], old: dict[str, Any] | None, override: dict[str, Any] | None) -> dict[str, Any]:
     url = item["url"]
     response = fetch(url)
-    document = html.fromstring(response.content)
+    # Decode explicitly before parsing; lxml can misread Japanese when given raw bytes.
+    document = html.fromstring(response.content.decode(response.encoding or "utf-8", errors="replace"))
 
     # Keep the article body but remove navigation, scripts and recommendations.
     for node in document.xpath("//script|//style|//noscript|//svg|//header|//footer|//nav"):
@@ -151,7 +184,10 @@ def extract_page(item: dict[str, str], old: dict[str, Any] | None, override: dic
 
     # Existing curated fields win. They contain reviewed Japanese summaries and
     # outcome figures that cannot be safely inferred from arbitrary HTML.
-    old = old or {}
+    old = {
+        key: value for key, value in (old or {}).items()
+        if not looks_mojibake(value)
+    }
     override = override or {}
     company = override.get("company") or old.get("company")
     if not company:
