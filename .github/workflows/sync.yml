@@ -39,6 +39,9 @@ jobs:
         run: |
           python scripts/sync_cases.py
           python scripts/build_site.py
+          
+      - name: Check generated text encoding
+        run: python scripts/check_mojibake.py
 
       - name: Commit changed case data
         run: |
